@@ -1,84 +1,7 @@
 const beam = document.getElementById("beam");
-const beamImage = document.getElementById("beam-image");
-
-const fin = document.getElementById("fin");
-const finImage = document.getElementById("fin-image");
-
 const game = document.getElementById("game");
 const message = document.getElementById("message");
-
-
-// ============================================================
-// メニュー
-// ============================================================
-
-const menuButton = document.getElementById("menu-button");
-const menuPanel = document.getElementById("menu-panel");
-
-const howtoButton = document.getElementById("howto-button");
-const rulesButton = document.getElementById("rules-button");
-const closeMenuButton = document.getElementById("close-menu-button");
-
-const howtoPanel = document.getElementById("howto-panel");
-const rulesPanel = document.getElementById("rules-panel");
-
-const panelCloseButtons =
-  document.querySelectorAll(".panel-close");
-
-
-menuButton.addEventListener("click", function(event) {
-
-  event.stopPropagation();
-
-  menuPanel.style.display =
-    menuPanel.style.display === "block"
-      ? "none"
-      : "block";
-
-});
-
-
-howtoButton.addEventListener("click", function(event) {
-
-  event.stopPropagation();
-
-  menuPanel.style.display = "none";
-  howtoPanel.style.display = "block";
-
-});
-
-
-rulesButton.addEventListener("click", function(event) {
-
-  event.stopPropagation();
-
-  menuPanel.style.display = "none";
-  rulesPanel.style.display = "block";
-
-});
-
-
-closeMenuButton.addEventListener("click", function(event) {
-
-  event.stopPropagation();
-
-  menuPanel.style.display = "none";
-
-});
-
-
-panelCloseButtons.forEach(function(button) {
-
-  button.addEventListener("click", function(event) {
-
-    event.stopPropagation();
-
-    howtoPanel.style.display = "none";
-    rulesPanel.style.display = "none";
-
-  });
-
-});
+const fin = document.getElementById("fin");
 
 
 // ============================================================
@@ -158,11 +81,12 @@ function removeTouchIndicator(id) {
 
 function clearTouchIndicators() {
 
-  Object.keys(touchIndicators).forEach(function(id) {
+  Object.keys(touchIndicators)
+    .forEach(function(id) {
 
-    removeTouchIndicator(id);
+      removeTouchIndicator(id);
 
-  });
+    });
 
 }
 
@@ -181,7 +105,6 @@ function createSparkle(touch) {
   sparkle.style.position = "fixed";
   sparkle.style.left =
     touch.clientX + "px";
-
   sparkle.style.top =
     touch.clientY + "px";
 
@@ -227,7 +150,6 @@ function createSparkle(touch) {
 // ============================================================
 
 const twoTapLines = [
-
   "はい！",
   "ハイ！",
   "キタ！キタ！",
@@ -239,33 +161,27 @@ const twoTapLines = [
   "チェンソー様！！",
   "チェンソー様ア！！",
   "キャキャ！"
-
 ];
 
 
 const fiveTapLines = [
-
   "すげえすごい！！",
   "さすがチェンソー様！！",
   "正解！！ 正解！！ 正解！！ 正解！！",
   "チェンソー様天才！ チェンソー様天才！",
   "ヒャ！！ ワアアアアアアアアアア！！"
-
 ];
 
 
 const shakeMaxLines = [
-
   "チェンソーさまあああ😭",
   "ぎゃああああああ！！",
   "あわあわあわあわ",
   "ヤヴァヤヴァヤヴァヤヴァヤヴァ"
-
 ];
 
 
 const damageLines = [
-
   "きゃ…き…",
   "う…うぇ…う〜ん……",
   "バクハツもうコリゴリ！",
@@ -273,7 +189,6 @@ const damageLines = [
   "う…あ…",
   "うう…",
   "ギギャア…………"
-
 ];
 
 
@@ -317,13 +232,14 @@ function clearMessage() {
 
 function updateLastInteraction() {
 
-  lastInteractionTime = Date.now();
+  lastInteractionTime =
+    Date.now();
 
 }
 
 
 // ============================================================
-// 通常モード 向き
+// 通常モード
 // ============================================================
 
 function updateBeamDirection() {
@@ -332,13 +248,15 @@ function updateBeamDirection() {
 
   if (dx > 0) {
 
-    beamImage.style.transform =
-      "scaleX(-1)";
+    beam.style.transform =
+      "translate(-50%, -50%) scaleX(-1)";
 
-  } else {
+  }
 
-    beamImage.style.transform =
-      "scaleX(1)";
+  else {
+
+    beam.style.transform =
+      "translate(-50%, -50%) scaleX(1)";
 
   }
 
@@ -346,7 +264,7 @@ function updateBeamDirection() {
 
 
 // ============================================================
-// 通常モード タップカウント
+// 通常タップ
 // ============================================================
 
 let tapCount = 0;
@@ -397,7 +315,7 @@ function registerNormalTap(touch) {
 
 
 // ============================================================
-// 通常モード 歩行
+// 通常歩行
 // ============================================================
 
 function startWalking() {
@@ -441,7 +359,7 @@ function stopWalking() {
 
 
 // ============================================================
-// 通常モード タップジャンプ
+// 通常タップジャンプ
 // ============================================================
 
 let jumpUntil = 0;
@@ -463,7 +381,6 @@ function doTap(touch) {
 
   registerNormalTap(touch);
 
-
   setTimeout(function() {
 
     if (mode !== "normal") return;
@@ -480,11 +397,11 @@ function doTap(touch) {
 
 
 // ============================================================
-// 通常モード 1本指
+// 通常 1本指
 // ============================================================
 
 let oneFingerHeld = false;
-let oneFingerStartTime = 0;
+let touchMoved = false;
 
 let tickleLastX = 0;
 let tickleLastY = 0;
@@ -494,14 +411,12 @@ let tickleChanges = 0;
 
 let lastTickleDirection = null;
 
-let touchMoved = false;
-
 let tickleStartTime = 0;
 let tickleLevel = 0;
 
 
 // ============================================================
-// 通常モード 2本指
+// 通常 2本指
 // ============================================================
 
 let twoFingerHolding = false;
@@ -517,54 +432,36 @@ let shakingStarted = false;
 
 
 // ============================================================
-// 通常 → ▲
-/* 無操作5秒 */
+// ▲設定
 // ============================================================
 
 const FIN_WAIT_TIME = 5000;
 
-
-// ============================================================
-// ▲ 壁
-// ============================================================
-
 const LEFT_WALL = 10;
 const RIGHT_WALL = 90;
-const TOP_WALL = 15;
-const BOTTOM_WALL = 80;
+
+const TOP_WALL = 12;
+const BOTTOM_WALL = 70;
 
 
 // ============================================================
-// ▲ 周回速度
+// ▲速度
+// px/frame基準
 // ============================================================
 
-const FIN_BASE_SPEED = 0.45;
+const FIN_BASE_SPEED_PX = 2.6;
 
+const FIN_FAST_START_SPEED_PX = 5.5;
 
-// ============================================================
-// ▲ 高速周回
-// ============================================================
-
-const FIN_FAST_START_SPEED = 0.9;
-
-const FIN_FAST_MAX_SPEED = 2.8;
+const FIN_FAST_MAX_SPEED_PX = 22;
 
 const FIN_FAST_ACCEL_TIME = 3000;
 
 const FIN_FAST_RELEASE_DELAY = 2000;
 
-const FIN_FAST_MAX_TIME = 3000;
-
 
 // ============================================================
-// ▲ 自動解除
-// ============================================================
-
-const FIN_AUTO_EXIT_TIME = 10000;
-
-
-// ============================================================
-// ▲ 状態
+// ▲状態
 // ============================================================
 
 let finWall = "left";
@@ -583,23 +480,21 @@ let finJumpProgress = 0;
 
 
 // ============================================================
-// ▲ 1本指ホールド
+// ▲ホールド
 // ============================================================
 
 let finOneFingerHolding = false;
-
-let finOneFingerStartTime = 0;
 
 let finHoldRecognized = false;
 
 let finHoldPauseUntil = 0;
 
-let finFollowX = 0;
-let finFollowY = 0;
+let finTargetX = 0;
+let finTargetY = 0;
 
 
 // ============================================================
-// ▲ 小刻み操作
+// ▲小刻み
 // ============================================================
 
 let finLastMoveX = 0;
@@ -608,6 +503,10 @@ let finLastMoveY = 0;
 let finRapidMovement = 0;
 
 let finRapidStartTime = 0;
+
+let finLastRapidTime = 0;
+
+let finLastRapidDirection = null;
 
 let finFastMode = false;
 
@@ -619,184 +518,205 @@ let finFastStartedAt = 0;
 
 
 // ============================================================
-// ▲ 2タップ
+// ▲2タップ
 // ============================================================
 
 let finTapCount = 0;
-
 let finTapTimer = null;
 
 
 // ============================================================
-// ▲ 自動解除タイマー
+// ▲自動解除
 // ============================================================
 
 let finAutoExitTimer = null;
 
 
 // ============================================================
-// ▲ 現在速度
+// ▲現在速度
 // ============================================================
 
-let finCurrentSpeed =
-  FIN_BASE_SPEED;
+let finCurrentSpeedPx =
+  FIN_BASE_SPEED_PX;
 
 
 // ============================================================
-// ▲ 向き
+// ▲位置変換
 // ============================================================
 
-function setFinDirection() {
+function pixelToPercentX(px) {
+
+  return px /
+    game.clientWidth *
+    100;
+
+}
+
+
+function pixelToPercentY(px) {
+
+  return px /
+    game.clientHeight *
+    100;
+
+}
+
+
+// ============================================================
+// ▲方向設定
+// ============================================================
+
+function setFinDirection(direction) {
+
+  const rotations = {
+
+    up: 0,
+    right: 90,
+    down: 180,
+    left: -90
+
+  };
+
+  fin.style.transform =
+    "translate(-50%, -50%) rotate(" +
+    rotations[direction] +
+    "deg)";
+
+}
+
+
+// ============================================================
+// ▲位置
+// ============================================================
+
+function updateFinPosition() {
+
+  fin.style.left = x + "%";
+  fin.style.top = y + "%";
+
+}
+
+
+// ============================================================
+// ▲現在の壁からの進行方向
+// ============================================================
+
+function getFinDirection() {
 
   if (finWall === "left") {
 
-    finImage.style.transform =
-      "rotate(90deg)";
+    if (finMovingDirection === "down") {
+      return "down";
+    }
+
+    return "up";
+
+  }
+
+  if (finWall === "top") {
+
+    if (finMovingDirection === "left") {
+      return "left";
+    }
+
+    return "right";
+
+  }
+
+  if (finWall === "right") {
+
+    if (finMovingDirection === "up") {
+      return "up";
+    }
+
+    return "down";
+
+  }
+
+  if (finWall === "bottom") {
+
+    if (finMovingDirection === "right") {
+      return "right";
+    }
+
+    return "left";
+
+  }
+
+}
+
+
+let finMovingDirection = "up";
+
+
+// ============================================================
+// ▲次の進行方向をランダム決定
+// ============================================================
+
+function chooseNextFinDirection() {
+
+  if (finWall === "left") {
+
+    finMovingDirection =
+      Math.random() < 0.5
+        ? "up"
+        : "down";
 
   }
 
   else if (finWall === "top") {
 
-    finImage.style.transform =
-      "rotate(180deg)";
+    finMovingDirection =
+      Math.random() < 0.5
+        ? "right"
+        : "left";
 
   }
 
   else if (finWall === "right") {
 
-    finImage.style.transform =
-      "rotate(-90deg)";
+    finMovingDirection =
+      Math.random() < 0.5
+        ? "down"
+        : "up";
 
   }
 
   else {
 
-    finImage.style.transform =
-      "rotate(0deg)";
+    finMovingDirection =
+      Math.random() < 0.5
+        ? "left"
+        : "right";
 
   }
+
+  setFinDirection(finMovingDirection);
 
 }
 
 
 // ============================================================
-// ▲ ホールド追従時の左右反転
-// ============================================================
-
-function updateFinFollowDirection(target) {
-
-  let movingPositive = false;
-  let movingNegative = false;
-
-  if (
-    finWall === "left" ||
-    finWall === "right"
-  ) {
-
-    if (target > y + 0.3) {
-      movingPositive = true;
-    }
-
-    if (target < y - 0.3) {
-      movingNegative = true;
-    }
-
-  }
-
-  else {
-
-    if (target > x + 0.3) {
-      movingPositive = true;
-    }
-
-    if (target < x - 0.3) {
-      movingNegative = true;
-    }
-
-  }
-
-
-  /*
-    進行方向に合わせて左右反転。
-    「どちら向きに進んでいるか」を
-    見た目にも反映する。
-  */
-
-  if (movingPositive) {
-
-    finImage.style.transform =
-      finImage.style.transform
-        .replace(/scaleX\(-1\)/, "");
-
-    finImage.style.transform +=
-      " scaleX(1)";
-
-  }
-
-  else if (movingNegative) {
-
-    finImage.style.transform =
-      finImage.style.transform
-        .replace(/scaleX\(-1\)/, "");
-
-    finImage.style.transform +=
-      " scaleX(-1)";
-
-  }
-
-}
-
-
-// ============================================================
-// ▲ 位置更新
-// ============================================================
-
-function updateFinPosition() {
-
-  fin.style.left =
-    x + "%";
-
-  fin.style.top =
-    y + "%";
-
-}
-
-
-// ============================================================
-// ▲ 壁へ移動
+// ▲壁へ移動
 // ============================================================
 
 function moveFinToWall() {
 
   if (mode !== "fin") return;
 
-  let targetX = x;
-  let targetY = y;
+  const targetX =
+    finWall === "left"
+      ? LEFT_WALL
+      : finWall === "right"
+        ? RIGHT_WALL
+        : x;
 
-
-  if (finWall === "left") {
-
-    targetX = LEFT_WALL;
-
-  }
-
-  else if (finWall === "right") {
-
-    targetX = RIGHT_WALL;
-
-  }
-
-  else if (finWall === "top") {
-
-    targetY = TOP_WALL;
-
-  }
-
-  else {
-
-    targetY = BOTTOM_WALL;
-
-  }
+  const targetY =
+    finWall === "top"
+      ? TOP_WALL
+      : finWall === "bottom"
+        ? BOTTOM_WALL
+        : y;
 
 
   const distanceX =
@@ -820,7 +740,7 @@ function moveFinToWall() {
 
     finMovingToWall = false;
 
-    setFinDirection();
+    chooseNextFinDirection();
 
   }
 
@@ -831,7 +751,7 @@ function moveFinToWall() {
 
 
 // ============================================================
-// ▲ モード開始
+// ▲モード開始
 // ============================================================
 
 function enterFinMode() {
@@ -862,26 +782,18 @@ function enterFinMode() {
   finFastMode = false;
   finMaxSpeedMode = false;
 
-  finCurrentSpeed =
-    FIN_BASE_SPEED;
-
   finRapidMovement = 0;
   finRapidStartTime = 0;
+  finLastRapidTime = 0;
+  finLastRapidDirection = null;
 
 
   const distances = {
 
-    left:
-      Math.abs(x - LEFT_WALL),
-
-    right:
-      Math.abs(x - RIGHT_WALL),
-
-    top:
-      Math.abs(y - TOP_WALL),
-
-    bottom:
-      Math.abs(y - BOTTOM_WALL)
+    left: Math.abs(x - LEFT_WALL),
+    right: Math.abs(x - RIGHT_WALL),
+    top: Math.abs(y - TOP_WALL),
+    bottom: Math.abs(y - BOTTOM_WALL)
 
   };
 
@@ -900,7 +812,7 @@ function enterFinMode() {
     );
 
 
-  setFinDirection();
+  chooseNextFinDirection();
 
   updateFinPosition();
 
@@ -912,84 +824,7 @@ function enterFinMode() {
 
 
 // ============================================================
-// ▲ 放置中の周回方向をランダム化
-// ============================================================
-
-function chooseRandomFinDirection() {
-
-  /*
-    現在の壁を基準に、
-    次に進む方向をランダムにする。
-
-    true  = 通常方向
-    false = 反対方向
-  */
-
-  const clockwise =
-    Math.random() < 0.5;
-
-
-  if (clockwise) {
-
-    if (finWall === "left") {
-
-      finWall = "top";
-
-    }
-
-    else if (finWall === "top") {
-
-      finWall = "right";
-
-    }
-
-    else if (finWall === "right") {
-
-      finWall = "bottom";
-
-    }
-
-    else {
-
-      finWall = "left";
-
-    }
-
-  }
-
-  else {
-
-    if (finWall === "left") {
-
-      finWall = "bottom";
-
-    }
-
-    else if (finWall === "bottom") {
-
-      finWall = "right";
-
-    }
-
-    else if (finWall === "right") {
-
-      finWall = "top";
-
-    }
-
-    else {
-
-      finWall = "left";
-
-    }
-
-  }
-
-}
-
-
-// ============================================================
-// ▲ 自動解除
+// ▲自動解除
 // ============================================================
 
 function startFinAutoExitTimer() {
@@ -1015,7 +850,7 @@ function startFinAutoExitTimer() {
 
       finJump();
 
-    }, FIN_AUTO_EXIT_TIME);
+    }, 10000);
 
 }
 
@@ -1030,7 +865,7 @@ function resetFinAutoExitTimer() {
 
 
 // ============================================================
-// ▲ 飛び出し
+// ▲飛び出し
 // ============================================================
 
 function finJump() {
@@ -1047,31 +882,31 @@ function finJump() {
   finJumpStartY = y;
 
 
-  if (finWall === "left") {
-
-    finJumpDirectionX = 1;
-    finJumpDirectionY = 0;
-
-  }
-
-  else if (finWall === "right") {
+  if (finMovingDirection === "left") {
 
     finJumpDirectionX = -1;
     finJumpDirectionY = 0;
 
   }
 
-  else if (finWall === "top") {
+  else if (finMovingDirection === "right") {
+
+    finJumpDirectionX = 1;
+    finJumpDirectionY = 0;
+
+  }
+
+  else if (finMovingDirection === "up") {
 
     finJumpDirectionX = 0;
-    finJumpDirectionY = 1;
+    finJumpDirectionY = -1;
 
   }
 
   else {
 
     finJumpDirectionX = 0;
-    finJumpDirectionY = -1;
+    finJumpDirectionY = 1;
 
   }
 
@@ -1079,7 +914,7 @@ function finJump() {
 
 
 // ============================================================
-// ▲ 飛び出し更新
+// ▲飛び出し更新
 // ============================================================
 
 function updateFinJump() {
@@ -1143,7 +978,7 @@ function updateFinJump() {
 
 
 // ============================================================
-// ▲ → 通常
+// ▲→通常
 // ============================================================
 
 function exitFinModeToNormal() {
@@ -1169,11 +1004,8 @@ function exitFinModeToNormal() {
 
   mode = "normal";
 
-  beam.style.left =
-    x + "%";
-
-  beam.style.top =
-    y + "%";
+  beam.style.left = x + "%";
+  beam.style.top = y + "%";
 
   updateBeamDirection();
 
@@ -1187,7 +1019,7 @@ function exitFinModeToNormal() {
 
 
 // ============================================================
-// ▲ 四辺周回
+// ▲四辺周回
 // ============================================================
 
 function moveFin() {
@@ -1224,17 +1056,45 @@ function moveFin() {
   }
 
 
+  const speed =
+    pixelToPercentX(FIN_BASE_SPEED_PX);
+
+
   if (finWall === "left") {
 
-    y -= FIN_BASE_SPEED;
+    if (finMovingDirection === "up") {
 
-    if (y <= TOP_WALL) {
+      y -= pixelToPercentY(
+        FIN_BASE_SPEED_PX
+      );
 
-      y = TOP_WALL;
+      if (y <= TOP_WALL) {
 
-      chooseRandomFinDirection();
+        y = TOP_WALL;
 
-      setFinDirection();
+        finWall = "top";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      y += pixelToPercentY(
+        FIN_BASE_SPEED_PX
+      );
+
+      if (y >= BOTTOM_WALL) {
+
+        y = BOTTOM_WALL;
+
+        finWall = "bottom";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1242,15 +1102,35 @@ function moveFin() {
 
   else if (finWall === "top") {
 
-    x += FIN_BASE_SPEED;
+    if (finMovingDirection === "right") {
 
-    if (x >= RIGHT_WALL) {
+      x += speed;
 
-      x = RIGHT_WALL;
+      if (x >= RIGHT_WALL) {
 
-      chooseRandomFinDirection();
+        x = RIGHT_WALL;
 
-      setFinDirection();
+        finWall = "right";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      x -= speed;
+
+      if (x <= LEFT_WALL) {
+
+        x = LEFT_WALL;
+
+        finWall = "left";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1258,15 +1138,39 @@ function moveFin() {
 
   else if (finWall === "right") {
 
-    y += FIN_BASE_SPEED;
+    if (finMovingDirection === "down") {
 
-    if (y >= BOTTOM_WALL) {
+      y += pixelToPercentY(
+        FIN_BASE_SPEED_PX
+      );
 
-      y = BOTTOM_WALL;
+      if (y >= BOTTOM_WALL) {
 
-      chooseRandomFinDirection();
+        y = BOTTOM_WALL;
 
-      setFinDirection();
+        finWall = "bottom";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      y -= pixelToPercentY(
+        FIN_BASE_SPEED_PX
+      );
+
+      if (y <= TOP_WALL) {
+
+        y = TOP_WALL;
+
+        finWall = "top";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1274,15 +1178,35 @@ function moveFin() {
 
   else {
 
-    x -= FIN_BASE_SPEED;
+    if (finMovingDirection === "left") {
 
-    if (x <= LEFT_WALL) {
+      x -= speed;
 
-      x = LEFT_WALL;
+      if (x <= LEFT_WALL) {
 
-      chooseRandomFinDirection();
+        x = LEFT_WALL;
 
-      setFinDirection();
+        finWall = "left";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      x += speed;
+
+      if (x >= RIGHT_WALL) {
+
+        x = RIGHT_WALL;
+
+        finWall = "right";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1295,12 +1219,8 @@ function moveFin() {
 
 
 // ============================================================
-// ▲ 指についてくる
+// ▲ホールド追従
 // ============================================================
-
-let finTargetX = 0;
-let finTargetY = 0;
-
 
 function moveFinTowardFinger() {
 
@@ -1308,23 +1228,36 @@ function moveFinTowardFinger() {
 
   if (!finHoldRecognized) return;
 
-
-  if (Date.now() < finHoldPauseUntil) {
-
-    return;
-
-  }
+  if (Date.now() < finHoldPauseUntil) return;
 
 
   const targetX =
-    finTargetX /
-    game.clientWidth *
-    100;
+    Math.max(
+      LEFT_WALL,
+      Math.min(
+        RIGHT_WALL,
+        pixelToPercentX(
+          finTargetX -
+          game.getBoundingClientRect().left
+        )
+      )
+    );
+
 
   const targetY =
-    finTargetY /
-    game.clientHeight *
-    100;
+    Math.max(
+      TOP_WALL,
+      Math.min(
+        BOTTOM_WALL,
+        pixelToPercentY(
+          finTargetY -
+          game.getBoundingClientRect().top
+        )
+      )
+    );
+
+
+  let moved = false;
 
 
   if (
@@ -1332,43 +1265,58 @@ function moveFinTowardFinger() {
     finWall === "right"
   ) {
 
-    const target =
-      Math.max(
-        TOP_WALL,
-        Math.min(
-          BOTTOM_WALL,
-          targetY
-        )
-      );
+    const difference =
+      targetY - y;
 
 
-    y +=
-      (target - y) *
-      0.035;
+    if (Math.abs(difference) > 0.2) {
 
+      const step =
+        difference * 0.035;
 
-    updateFinFollowDirection(target);
+      y += step;
+
+      moved = true;
+
+      finMovingDirection =
+        step < 0
+          ? "up"
+          : "down";
+
+    }
 
   }
 
   else {
 
-    const target =
-      Math.max(
-        LEFT_WALL,
-        Math.min(
-          RIGHT_WALL,
-          targetX
-        )
-      );
+    const difference =
+      targetX - x;
 
 
-    x +=
-      (target - x) *
-      0.035;
+    if (Math.abs(difference) > 0.2) {
+
+      const step =
+        difference * 0.035;
+
+      x += step;
+
+      moved = true;
+
+      finMovingDirection =
+        step < 0
+          ? "left"
+          : "right";
+
+    }
+
+  }
 
 
-    updateFinFollowDirection(target);
+  if (moved) {
+
+    setFinDirection(
+      finMovingDirection
+    );
 
   }
 
@@ -1379,7 +1327,7 @@ function moveFinTowardFinger() {
 
 
 // ============================================================
-// ▲ 高速周回開始
+// ▲高速周回開始
 // ============================================================
 
 function startFinFastMode() {
@@ -1395,11 +1343,8 @@ function startFinFastMode() {
   finFastStartedAt =
     Date.now();
 
-  finCurrentSpeed =
-    FIN_FAST_START_SPEED;
-
-  finRapidStartTime =
-    Date.now();
+  finCurrentSpeedPx =
+    FIN_FAST_START_SPEED_PX;
 
   showMessage(
     "ｽｲｽｲｽｲｽｲｽｲｽｲ"
@@ -1409,7 +1354,7 @@ function startFinFastMode() {
 
 
 // ============================================================
-// ▲ 最高速
+// ▲最高速
 // ============================================================
 
 function startFinMaxSpeed() {
@@ -1422,8 +1367,8 @@ function startFinMaxSpeed() {
 
   finMaxSpeedMode = true;
 
-  finCurrentSpeed =
-    FIN_FAST_MAX_SPEED;
+  finCurrentSpeedPx =
+    FIN_FAST_MAX_SPEED_PX;
 
   showMessage(
     "キャーーー！！！"
@@ -1433,7 +1378,7 @@ function startFinMaxSpeed() {
 
 
 // ============================================================
-// ▲ 高速周回移動
+// ▲高速周回
 // ============================================================
 
 function moveFinFast() {
@@ -1443,8 +1388,8 @@ function moveFinFast() {
 
   if (finMaxSpeedMode) {
 
-    finCurrentSpeed =
-      FIN_FAST_MAX_SPEED;
+    finCurrentSpeedPx =
+      FIN_FAST_MAX_SPEED_PX;
 
   }
 
@@ -1463,32 +1408,59 @@ function moveFinFast() {
       );
 
 
-    finCurrentSpeed =
-      FIN_FAST_START_SPEED +
+    finCurrentSpeedPx =
+      FIN_FAST_START_SPEED_PX +
       (
-        FIN_FAST_MAX_SPEED -
-        FIN_FAST_START_SPEED
+        FIN_FAST_MAX_SPEED_PX -
+        FIN_FAST_START_SPEED_PX
       ) *
       progress;
 
   }
 
 
-  const speed =
-    finCurrentSpeed;
+  const speedX =
+    pixelToPercentX(
+      finCurrentSpeedPx
+    );
+
+  const speedY =
+    pixelToPercentY(
+      finCurrentSpeedPx
+    );
 
 
   if (finWall === "left") {
 
-    y -= speed;
+    if (finMovingDirection === "up") {
 
-    if (y <= TOP_WALL) {
+      y -= speedY;
 
-      y = TOP_WALL;
+      if (y <= TOP_WALL) {
 
-      finWall = "top";
+        y = TOP_WALL;
 
-      setFinDirection();
+        finWall = "top";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      y += speedY;
+
+      if (y >= BOTTOM_WALL) {
+
+        y = BOTTOM_WALL;
+
+        finWall = "bottom";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1496,15 +1468,35 @@ function moveFinFast() {
 
   else if (finWall === "top") {
 
-    x += speed;
+    if (finMovingDirection === "right") {
 
-    if (x >= RIGHT_WALL) {
+      x += speedX;
 
-      x = RIGHT_WALL;
+      if (x >= RIGHT_WALL) {
 
-      finWall = "right";
+        x = RIGHT_WALL;
 
-      setFinDirection();
+        finWall = "right";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      x -= speedX;
+
+      if (x <= LEFT_WALL) {
+
+        x = LEFT_WALL;
+
+        finWall = "left";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1512,15 +1504,35 @@ function moveFinFast() {
 
   else if (finWall === "right") {
 
-    y += speed;
+    if (finMovingDirection === "down") {
 
-    if (y >= BOTTOM_WALL) {
+      y += speedY;
 
-      y = BOTTOM_WALL;
+      if (y >= BOTTOM_WALL) {
 
-      finWall = "bottom";
+        y = BOTTOM_WALL;
 
-      setFinDirection();
+        finWall = "bottom";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      y -= speedY;
+
+      if (y <= TOP_WALL) {
+
+        y = TOP_WALL;
+
+        finWall = "top";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1528,15 +1540,35 @@ function moveFinFast() {
 
   else {
 
-    x -= speed;
+    if (finMovingDirection === "left") {
 
-    if (x <= LEFT_WALL) {
+      x -= speedX;
 
-      x = LEFT_WALL;
+      if (x <= LEFT_WALL) {
 
-      finWall = "left";
+        x = LEFT_WALL;
 
-      setFinDirection();
+        finWall = "left";
+
+        chooseNextFinDirection();
+
+      }
+
+    }
+
+    else {
+
+      x += speedX;
+
+      if (x >= RIGHT_WALL) {
+
+        x = RIGHT_WALL;
+
+        finWall = "right";
+
+        chooseNextFinDirection();
+
+      }
 
     }
 
@@ -1549,7 +1581,7 @@ function moveFinFast() {
 
 
 // ============================================================
-// ▲ 高速周回終了
+// ▲高速周回終了
 // ============================================================
 
 function releaseFinFastMode() {
@@ -1571,13 +1603,12 @@ function releaseFinFastMode() {
 
 
 // ============================================================
-// ▲ 通常高速周回後
+// ▲通常高速終了
 // ============================================================
 
 function finishFinFastReaction() {
 
   if (mode !== "fin") return;
-
 
   if (finMaxSpeedMode) {
 
@@ -1594,25 +1625,17 @@ function finishFinFastReaction() {
   clearMessage();
 
 
-  /*
-    ▲はその場でスイーッと止まり、
-    キャキャ！！と一緒に通常ビームが飛び出す。
-
-    飛び出している途中で▲へ戻す。
-  */
-
-  showMessage("キャキャ！！");
+  showMessage(
+    "キャキャ！！"
+  );
 
 
   fin.style.display = "none";
 
   beam.style.display = "block";
 
-  beam.style.left =
-    x + "%";
-
-  beam.style.top =
-    y + "%";
+  beam.style.left = x + "%";
+  beam.style.top = y + "%";
 
   beam.classList.remove("walking");
   beam.classList.remove("jump");
@@ -1632,11 +1655,11 @@ function finishFinFastReaction() {
 
     fin.style.display = "block";
 
+    mode = "fin";
+
     finJumping = false;
 
     finMovingToWall = true;
-
-    clearMessage();
 
     showMessage(
       "ザプンッ！",
@@ -1654,13 +1677,13 @@ function finishFinFastReaction() {
 
     startFinAutoExitTimer();
 
-  }, 800);
+  }, 900);
 
 }
 
 
 // ============================================================
-// ▲ 最高速後
+// ▲最高速終了
 // ============================================================
 
 function finishFinMaxReaction() {
@@ -1675,11 +1698,8 @@ function finishFinMaxReaction() {
 
   beam.style.display = "block";
 
-  beam.style.left =
-    x + "%";
-
-  beam.style.top =
-    y + "%";
+  beam.style.left = x + "%";
+  beam.style.top = y + "%";
 
   beam.classList.remove("walking");
   beam.classList.remove("jump");
@@ -1740,7 +1760,7 @@ function finishFinMaxReaction() {
 
 
 // ============================================================
-// ▲ 2タップ
+// ▲2タップ
 // ============================================================
 
 function registerFinTap() {
@@ -1771,10 +1791,6 @@ function registerFinTap() {
 }
 
 
-// ============================================================
-// ▲ 2タップ解除
-// ============================================================
-
 function exitFinModeByTap() {
 
   clearTimeout(finTapTimer);
@@ -1797,7 +1813,7 @@ function exitFinModeByTap() {
 
 
 // ============================================================
-// ▲ 1秒ホールド認識
+// ▲1秒ホールド
 // ============================================================
 
 function recognizeFinHold() {
@@ -1815,14 +1831,9 @@ function recognizeFinHold() {
     Date.now() + 1000;
 
 
-  showMessage("……!");
-
-
-  finFollowX =
-    finTargetX;
-
-  finFollowY =
-    finTargetY;
+  showMessage(
+    "……！"
+  );
 
 
   resetFinAutoExitTimer();
@@ -1831,13 +1842,10 @@ function recognizeFinHold() {
 
 
 // ============================================================
-// ▲ 小刻み操作判定
+// ▲小刻み判定
 // ============================================================
 
-function checkFinRapidMovement(
-  currentX,
-  currentY
-) {
+function checkFinRapidMovement(currentX, currentY) {
 
   if (!finOneFingerHolding) return;
 
@@ -1847,12 +1855,10 @@ function checkFinRapidMovement(
 
 
   const moveX =
-    currentX -
-    finLastMoveX;
+    currentX - finLastMoveX;
 
   const moveY =
-    currentY -
-    finLastMoveY;
+    currentY - finLastMoveY;
 
 
   const distance =
@@ -1866,21 +1872,81 @@ function checkFinRapidMovement(
     Date.now();
 
 
-  if (distance >= 7) {
+  let direction = null;
 
-    finRapidMovement++;
 
-    if (finRapidStartTime === 0) {
+  if (Math.abs(moveX) > Math.abs(moveY)) {
 
-      finRapidStartTime =
-        now;
+    direction =
+      moveX > 0
+        ? "right"
+        : "left";
+
+  }
+
+  else {
+
+    direction =
+      moveY > 0
+        ? "down"
+        : "up";
+
+  }
+
+
+  /*
+    小刻み操作は、
+
+    ・小さめの移動
+    ・短い間隔
+    ・方向転換
+
+    を組み合わせて判定する。
+  */
+
+  if (
+    distance >= 3 &&
+    distance <= 20
+  ) {
+
+    if (
+      finLastRapidTime !== 0 &&
+      now - finLastRapidTime > 450
+    ) {
+
+      finRapidMovement = 0;
+      finRapidStartTime = 0;
+      finLastRapidDirection = null;
 
     }
 
 
     if (
+      finLastRapidDirection !== null &&
+      direction !== finLastRapidDirection
+    ) {
+
+      finRapidMovement++;
+
+    }
+    else if (
+      finLastRapidDirection === null
+    ) {
+
+      finRapidMovement++;
+
+    }
+
+
+    finLastRapidTime = now;
+
+    finLastRapidDirection =
+      direction;
+
+
+    if (
       !finFastMode &&
-      finRapidMovement >= 4
+      finRapidMovement >= 5
     ) {
 
       startFinFastMode();
@@ -1895,34 +1961,47 @@ function checkFinRapidMovement(
     !finMaxSpeedMode
   ) {
 
-    const elapsed =
-      now -
-      finRapidStartTime;
-
-
     if (
-      elapsed >=
-      FIN_FAST_MAX_TIME
+      finLastRapidTime !== 0 &&
+      now - finLastRapidTime <= 450
     ) {
 
-      startFinMaxSpeed();
+      const elapsed =
+        now - finFastStartedAt;
+
+
+      if (
+        elapsed >= FIN_FAST_ACCEL_TIME
+      ) {
+
+        startFinMaxSpeed();
+
+      }
+
+    }
+
+    else {
+
+      /*
+        高速周回中に小刻み操作が止まったら、
+        最高速へは進まない。
+      */
+
+      finRapidStartTime = now;
 
     }
 
   }
 
 
-  finLastMoveX =
-    currentX;
-
-  finLastMoveY =
-    currentY;
+  finLastMoveX = currentX;
+  finLastMoveY = currentY;
 
 }
 
 
 // ============================================================
-// 通常モード くすぐり
+// 通常くすぐり
 // ============================================================
 
 function startTickle() {
@@ -1936,8 +2015,7 @@ function startTickle() {
 
   beam.classList.add("tickled");
 
-  beam.dataset.tickleLevel =
-    "1";
+  beam.dataset.tickleLevel = "1";
 
   showMessage(
     "くすぐったい……ッ！"
@@ -1962,8 +2040,7 @@ function updateTickle() {
 
     tickleLevel = 1;
 
-    beam.dataset.tickleLevel =
-      "1";
+    beam.dataset.tickleLevel = "1";
 
     showMessage(
       "くすぐったい……ッ！"
@@ -1975,8 +2052,7 @@ function updateTickle() {
 
     tickleLevel = 2;
 
-    beam.dataset.tickleLevel =
-      "2";
+    beam.dataset.tickleLevel = "2";
 
     showMessage(
       "キャハッ！ キャッキャッ！"
@@ -1988,8 +2064,7 @@ function updateTickle() {
 
     tickleLevel = 3;
 
-    beam.dataset.tickleLevel =
-      "3";
+    beam.dataset.tickleLevel = "3";
 
     showMessage(
       "や、やめ…"
@@ -2001,12 +2076,9 @@ function updateTickle() {
 
     tickleLevel = 4;
 
-    beam.dataset.tickleLevel =
-      "4";
+    beam.dataset.tickleLevel = "4";
 
-    beam.classList.add(
-      "tickle-max"
-    );
+    beam.classList.add("tickle-max");
 
     showMessage(
       "キャハ〜〜！！"
@@ -2025,17 +2097,10 @@ function showDamageReaction() {
 
   mode = "damage";
 
-  beam.classList.remove(
-    "panting"
-  );
+  beam.classList.remove("panting");
+  beam.classList.remove("shake-max");
 
-  beam.classList.remove(
-    "shake-max"
-  );
-
-  beam.classList.add(
-    "damage"
-  );
+  beam.classList.add("damage");
 
 
   showMessage(
@@ -2046,9 +2111,7 @@ function showDamageReaction() {
 
   setTimeout(function() {
 
-    beam.classList.remove(
-      "damage"
-    );
+    beam.classList.remove("damage");
 
 
     if (mode !== "damage") return;
@@ -2068,6 +2131,64 @@ function showDamageReaction() {
 
 
 // ============================================================
+// 最大くすぐり後
+// ============================================================
+
+function finishMaxTickle() {
+
+  mode = "resting";
+
+  beam.classList.remove("tickled");
+  beam.classList.remove("tickle-max");
+
+  delete beam.dataset.tickleLevel;
+
+  beam.classList.remove("high-jump");
+
+  void beam.offsetWidth;
+
+  beam.classList.add("high-jump");
+
+
+  // 「キャハ〜〜！！」をジャンプ中ずっと表示
+  showMessage(
+    "キャハ〜〜！！"
+  );
+
+
+  // 1回だけ高くジャンプ。
+  // ここで2段階ジャンプを起こさない。
+
+  setTimeout(function() {
+
+    beam.classList.remove("high-jump");
+
+    if (mode !== "resting") return;
+
+
+    beam.classList.add("panting");
+
+    showMessage(
+      "はぁ…はぁ…"
+    );
+
+
+    setTimeout(function() {
+
+      beam.classList.remove("panting");
+
+      if (mode !== "resting") return;
+
+      showDamageReaction();
+
+    }, 2200);
+
+  }, 1100);
+
+}
+
+
+// ============================================================
 // タッチ開始
 // ============================================================
 
@@ -2080,16 +2201,15 @@ game.addEventListener(
     updateLastInteraction();
 
 
-    Array.from(
-      event.changedTouches
-    ).forEach(function(touch) {
+    Array.from(event.changedTouches)
+      .forEach(function(touch) {
 
-      createTouchIndicator(
-        touch.identifier,
-        touch
-      );
+        createTouchIndicator(
+          touch.identifier,
+          touch
+        );
 
-    });
+      });
 
 
     // ========================================================
@@ -2116,9 +2236,6 @@ game.addEventListener(
 
         finOneFingerHolding = true;
 
-        finOneFingerStartTime =
-          Date.now();
-
         finHoldRecognized = false;
 
         finTargetX =
@@ -2136,8 +2253,9 @@ game.addEventListener(
 
 
         finRapidMovement = 0;
-
         finRapidStartTime = 0;
+        finLastRapidTime = 0;
+        finLastRapidDirection = null;
 
 
         clearTimeout(holdTimer);
@@ -2198,9 +2316,7 @@ game.addEventListener(
 
 
       shakeStartTime = 0;
-
       shakeMaxReached = false;
-
       shakingStarted = false;
 
 
@@ -2214,9 +2330,7 @@ game.addEventListener(
 
             mode = "held";
 
-            beam.classList.add(
-              "held"
-            );
+            beam.classList.add("held");
 
             showMessage(
               "キャ？(浮いてる……)"
@@ -2242,9 +2356,6 @@ game.addEventListener(
       clearTimeout(normalTimer);
 
       oneFingerHeld = true;
-
-      oneFingerStartTime =
-        Date.now();
 
       touchMoved = false;
 
@@ -2274,9 +2385,7 @@ game.addEventListener(
 
             mode = "oneFingerHold";
 
-            beam.classList.remove(
-              "walking"
-            );
+            beam.classList.remove("walking");
 
             showMessage(
               "……？"
@@ -2306,16 +2415,15 @@ game.addEventListener(
     updateLastInteraction();
 
 
-    Array.from(
-      event.changedTouches
-    ).forEach(function(touch) {
+    Array.from(event.changedTouches)
+      .forEach(function(touch) {
 
-      createTouchIndicator(
-        touch.identifier,
-        touch
-      );
+        createTouchIndicator(
+          touch.identifier,
+          touch
+        );
 
-    });
+      });
 
 
     // ========================================================
@@ -2353,7 +2461,7 @@ game.addEventListener(
 
 
     // ========================================================
-    // 通常 2本指 待機
+    // 通常 2本指待機
     // ========================================================
 
     if (
@@ -2374,14 +2482,13 @@ game.addEventListener(
           event.touches[1].clientY
         ) / 2;
 
-
       return;
 
     }
 
 
     // ========================================================
-    // 通常 2本指 摘み上げ
+    // 通常 2本指
     // ========================================================
 
     if (
@@ -2497,9 +2604,9 @@ game.addEventListener(
 
       y =
         Math.max(
-          15,
+          12,
           Math.min(
-            80,
+            70,
             y
           )
         );
@@ -2525,7 +2632,7 @@ game.addEventListener(
 
 
     // ========================================================
-    // 通常 1本指 くすぐり
+    // 通常 1本指くすぐり
     // ========================================================
 
     if (
@@ -2563,8 +2670,7 @@ game.addEventListener(
       }
 
 
-      tickleDistance +=
-        distance;
+      tickleDistance += distance;
 
 
       let direction = null;
@@ -2637,11 +2743,8 @@ game.addEventListener(
       }
 
 
-      tickleLastX =
-        currentX;
-
-      tickleLastY =
-        currentY;
+      tickleLastX = currentX;
+      tickleLastY = currentY;
 
     }
 
@@ -2661,15 +2764,14 @@ game.addEventListener(
     updateLastInteraction();
 
 
-    Array.from(
-      event.changedTouches
-    ).forEach(function(touch) {
+    Array.from(event.changedTouches)
+      .forEach(function(touch) {
 
-      removeTouchIndicator(
-        touch.identifier
-      );
+        removeTouchIndicator(
+          touch.identifier
+        );
 
-    });
+      });
 
 
     // ========================================================
@@ -2725,7 +2827,7 @@ game.addEventListener(
 
 
     // ========================================================
-    // 通常 2本指 待機
+    // 通常 2本指待機
     // ========================================================
 
     if (
@@ -2749,7 +2851,7 @@ game.addEventListener(
 
 
     // ========================================================
-    // 通常 摘み上げ終了
+    // 摘み上げ終了
     // ========================================================
 
     if (
@@ -2761,7 +2863,6 @@ game.addEventListener(
 
       twoFingerHolding = false;
 
-
       beam.classList.remove("held");
       beam.classList.remove("shaking");
       beam.classList.remove("shake-max");
@@ -2771,13 +2872,11 @@ game.addEventListener(
 
       clearMessage();
 
-
       beam.classList.remove("drop");
 
       void beam.offsetWidth;
 
       beam.classList.add("drop");
-
 
       showMessage(
         "ぽとっ……"
@@ -2790,9 +2889,7 @@ game.addEventListener(
 
       setTimeout(function() {
 
-        beam.classList.remove(
-          "drop"
-        );
+        beam.classList.remove("drop");
 
 
         if (wasMax) {
@@ -2830,7 +2927,7 @@ game.addEventListener(
 
 
     // ========================================================
-    // 通常 くすぐり終了
+    // 最大くすぐり
     // ========================================================
 
     if (
@@ -2840,6 +2937,15 @@ game.addEventListener(
 
       const wasMax =
         tickleLevel >= 4;
+
+
+      if (wasMax) {
+
+        finishMaxTickle();
+
+        return;
+
+      }
 
 
       beam.classList.remove(
@@ -2855,99 +2961,27 @@ game.addEventListener(
 
       mode = "resting";
 
-
-      if (wasMax) {
-
-        /*
-          今回の変更点。
-
-          指を離した直後は
-          「キャハ〜〜！！」を維持。
-
-          そのまま大ジャンプ。
-
-          着地してから
-          はぁ…はぁ…
-          ↓
-          やられセリフ＋震え
-        */
-
-        beam.classList.remove(
-          "big-jump"
-        );
-
-        void beam.offsetWidth;
-
-        beam.classList.add(
-          "big-jump"
-        );
-
-        showMessage(
-          "キャハ〜〜！！"
-        );
+      showMessage(
+        "キャッ！"
+      );
 
 
-        setTimeout(function() {
+      setTimeout(function() {
 
-          beam.classList.remove(
-            "big-jump"
-          );
-
-
-          if (mode !== "resting") {
-            return;
-          }
+        if (
+          mode !== "resting"
+        ) return;
 
 
-          beam.classList.add(
-            "panting"
-          );
+        mode = "normal";
 
-          showMessage(
-            "はぁ…はぁ…"
-          );
+        clearMessage();
 
+        updateLastInteraction();
 
-          setTimeout(function() {
+        startWalking();
 
-            beam.classList.remove(
-              "panting"
-            );
-
-            showDamageReaction();
-
-          }, 2200);
-
-        }, 1150);
-
-
-      }
-
-      else {
-
-        showMessage(
-          "キャッ！"
-        );
-
-
-        setTimeout(function() {
-
-          if (
-            mode !== "resting"
-          ) return;
-
-
-          mode = "normal";
-
-          clearMessage();
-
-          updateLastInteraction();
-
-          startWalking();
-
-        }, 1500);
-
-      }
+      }, 1500);
 
 
       return;
@@ -3047,8 +3081,7 @@ function moveBeam() {
 
       x = 90;
 
-      dx =
-        -Math.abs(dx);
+      dx = -Math.abs(dx);
 
       updateBeamDirection();
 
@@ -3059,30 +3092,27 @@ function moveBeam() {
 
       x = 10;
 
-      dx =
-        Math.abs(dx);
+      dx = Math.abs(dx);
 
       updateBeamDirection();
 
     }
 
 
-    if (y >= 80) {
+    if (y >= 70) {
 
-      y = 80;
+      y = 70;
 
-      dy =
-        -Math.abs(dy);
+      dy = -Math.abs(dy);
 
     }
 
 
-    if (y <= 15) {
+    if (y <= 12) {
 
-      y = 15;
+      y = 12;
 
-      dy =
-        Math.abs(dy);
+      dy = Math.abs(dy);
 
     }
 
@@ -3104,7 +3134,7 @@ function moveBeam() {
 
 
 // ============================================================
-// ▲ 移動ループ
+// ▲移動ループ
 // ============================================================
 
 function moveFinLoop() {
@@ -3134,7 +3164,7 @@ function moveFinLoop() {
 
 
 // ============================================================
-// 通常モード ランダム方向変更
+// 通常ランダム方向
 // ============================================================
 
 setInterval(function() {
@@ -3198,6 +3228,151 @@ setInterval(function() {
 
 
 // ============================================================
+// メニュー
+// ============================================================
+
+const menuButton =
+  document.getElementById("menuButton");
+
+const menuPanel =
+  document.getElementById("menuPanel");
+
+const howToButton =
+  document.getElementById("howToButton");
+
+const rulesButton =
+  document.getElementById("rulesButton");
+
+const closeMenuButton =
+  document.getElementById("closeMenuButton");
+
+const howToPanel =
+  document.getElementById("howToPanel");
+
+const rulesPanel =
+  document.getElementById("rulesPanel");
+
+const howToClose =
+  document.getElementById("howToClose");
+
+const rulesClose =
+  document.getElementById("rulesClose");
+
+
+function openMenu() {
+
+  menuPanel.classList.add("open");
+
+}
+
+
+function closeMenu() {
+
+  menuPanel.classList.remove("open");
+
+}
+
+
+function openHowTo() {
+
+  closeMenu();
+
+  howToPanel.classList.add("open");
+
+}
+
+
+function openRules() {
+
+  closeMenu();
+
+  rulesPanel.classList.add("open");
+
+}
+
+
+function closeInfoPanels() {
+
+  howToPanel.classList.remove("open");
+
+  rulesPanel.classList.remove("open");
+
+}
+
+
+menuButton.addEventListener(
+  "click",
+  function(event) {
+
+    event.stopPropagation();
+
+    openMenu();
+
+  }
+);
+
+
+howToButton.addEventListener(
+  "click",
+  function(event) {
+
+    event.stopPropagation();
+
+    openHowTo();
+
+  }
+);
+
+
+rulesButton.addEventListener(
+  "click",
+  function(event) {
+
+    event.stopPropagation();
+
+    openRules();
+
+  }
+);
+
+
+closeMenuButton.addEventListener(
+  "click",
+  function(event) {
+
+    event.stopPropagation();
+
+    closeMenu();
+
+  }
+);
+
+
+howToClose.addEventListener(
+  "click",
+  function(event) {
+
+    event.stopPropagation();
+
+    closeInfoPanels();
+
+  }
+);
+
+
+rulesClose.addEventListener(
+  "click",
+  function(event) {
+
+    event.stopPropagation();
+
+    closeInfoPanels();
+
+  }
+);
+
+
+// ============================================================
 // 初期化
 // ============================================================
 
@@ -3208,10 +3383,6 @@ beam.style.left =
 
 beam.style.top =
   y + "%";
-
-
-fin.style.display = "none";
-
 
 updateBeamDirection();
 
