@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
-
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>びむたんぽけっと</title>
 
   <link rel="stylesheet" href="./style.css">
@@ -13,159 +10,117 @@
 
 <body>
 
-  <!-- =========================
-       タイトル・メニュー
-  ========================== -->
-
-  <header id="topbar">
-
-    <div id="title">
-      びむたんぽけっと
-    </div>
-
-    <button id="menuButton">
-      メニュー
-    </button>
-
-  </header>
-
-
-  <!-- =========================
-       ゲーム
-  ========================== -->
-
   <div id="game">
 
-    <div id="beam">🦈</div>
+    <!-- タイトル・メニューボタン -->
+    <div id="top-ui">
+      <div id="game-title">びむたんぽけっと</div>
 
+      <button id="menu-button" type="button">
+        メニュー
+      </button>
+    </div>
+
+
+    <!-- ゲーム本体 -->
+    <div id="beam">
+      <img src="./beam.png" alt="ビーム">
+    </div>
+
+
+    <!-- 背ビレモード -->
     <div id="fin">▲</div>
 
-    <p id="message"></p>
 
-  </div>
+    <!-- セリフ -->
+    <p id="message">画面をタップ！</p>
 
 
-  <!-- =========================
-       メニュー画面
-  ========================== -->
+    <!-- メニュー -->
+    <div id="menu-panel">
 
-  <div id="menuPanel">
-
-    <div id="menuInner">
-
-      <button class="menuChoice" id="howToButton">
+      <button id="howto-button" type="button">
         あそびかた
       </button>
 
-      <button class="menuChoice" id="rulesButton">
+      <button id="rules-button" type="button">
         おやくそく
       </button>
 
-      <button class="menuChoice" id="closeMenuButton">
+      <button id="menu-close-button" type="button">
         とじる
       </button>
 
     </div>
 
-  </div>
 
-
-  <!-- =========================
-       説明書
-  ========================== -->
-
-  <div id="howToPanel" class="infoPanel">
-
-    <div class="infoInner">
+    <!-- あそびかた -->
+    <div id="howto-panel" class="info-panel">
 
       <h2>○ あそびかた ○</h2>
 
-      <section>
+      <h3>【おさんぽ】🕺</h3>
 
-        <h3>【おさんぽ】🕺</h3>
+      <p>
+        <strong>・1本指 👆</strong><br>
+        指を置くと「止まる」<br>
+        (ロレンチーニ器官…！？)<br>
+        → 小刻みスライドで「コチョコチョ」
+      </p>
 
-        <p>
-          <strong>・1本指 👆</strong><br>
-          指を置くと「止まる」<br>
-          （ロレンチーニ器官…！？）<br>
-          → 小刻みスライドで「コチョコチョ」
-        </p>
-
-        <p>
-          <strong>・2本指 👌</strong><br>
-          指を置くと「つまむ」<br>
-          → ゆっくりスライドで「運ぶ」<br>
-          → 小刻みスライドで「揺らす」
-        </p>
-
-      </section>
-
-
-      <section>
-
-        <h3>【せんすいちゅう】─▲</h3>
-
-        <p>
-          <strong>1本指 ☝️</strong><br>
-          ・指を置くと「注目」！<br>
-          → ゆっくりスライドで「おいかけっこ」<br>
-          → 小刻みスライドで「スイスイ」
-        </p>
-
-        <p>
-          ・2回タップで【おさんぽ】に戻る！
-        </p>
-
-      </section>
-
-
-      <p class="reloadNote">
-        ※困ったらリロード 🔁 してね！
+      <p>
+        <strong>・2本指 👌</strong><br>
+        指を置くと「つまむ」<br>
+        → ゆっくりスライドで「運ぶ」<br>
+        → 小刻みスライドで「揺らす」
       </p>
 
 
-      <button class="backButton" id="howToClose">
+      <h3>【せんすいちゅう】─▲</h3>
+
+      <p>
+        <strong>1本指 ☝️</strong><br>
+        ・指を置くと「注目」！<br>
+        → ゆっくりスライドで「おいかけっこ」<br>
+        → 小刻みスライドで「スイスイ」
+      </p>
+
+      <p>
+        ・2回タップで【おさんぽ】に戻る！
+      </p>
+
+      <p>
+        ※困ったらリロード 🔁してね！
+      </p>
+
+      <button class="panel-close" type="button">
         とじる
       </button>
 
     </div>
 
-  </div>
 
-
-  <!-- =========================
-       おやくそく
-  ========================== -->
-
-  <div id="rulesPanel" class="infoPanel">
-
-    <div class="infoInner rulesFont">
+    <!-- おやくそく -->
+    <div id="rules-panel" class="info-panel">
 
       <h2>○ おやくそく ○</h2>
 
       <p>
-        このゲームで遊んでいるところは、
-        スクリーンショットや動画に撮って
-        SNSなどに投稿してOKです。
+        このゲームのスクリーンショットや動画は、<br>
+        SNSなどに投稿してOKです！
       </p>
 
       <p>
-        「びむたんぽけっと」の名前や
-        ゲームへのリンクを添えてもらえると嬉しいです。
+        「こんな遊び方した！」など、<br>
+        楽しんでもらえたらうれしいです。
       </p>
 
       <p>
-        ゲーム本体の転載は禁止
-        再配布や、
-        自分で作ったものとして公開することはご遠慮ください。
+        不具合・お問い合わせなどは、<br>
+        制作者までご連絡ください。
       </p>
 
-      <p>
-        不具合や感想などの連絡先は、
-        公開時にここへ記載します。
-      </p>
-
-      <button class="backButton" id="rulesClose">
+      <button class="panel-close" type="button">
         とじる
       </button>
 
@@ -177,5 +132,4 @@
   <script src="./script.js"></script>
 
 </body>
-
 </html>
