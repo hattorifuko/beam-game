@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,107 +12,122 @@
 
   <div id="game">
 
-    <!-- タイトル・メニュー -->
-    <div id="top-bar">
+    <!-- タイトル・メニューボタン -->
+    <div id="top-ui">
       <div id="game-title">びむたんぽけっと</div>
-      <button id="menu-button">メニュー</button>
+
+      <button id="menu-button" type="button">
+        メニュー
+      </button>
     </div>
 
-    <!-- メニュー -->
-    <div id="menu-panel">
 
-      <button id="howto-button">あそびかた</button>
-      <button id="rules-button">おやくそく</button>
-      <button id="close-menu-button">とじる</button>
-
-    </div>
-
-    <!-- 説明書 -->
-    <div id="howto-panel" class="info-panel">
-
-      <div class="info-inner">
-
-        <h2>○ あそびかた ○</h2>
-
-        <h3>【おさんぽ】🕺</h3>
-
-        <p>
-          ・1本指 👆<br>
-          指を置くと「止まる」<br>
-          （ロレンチーニ器官が……！？）<br>
-          → 小刻みスライドで「コチョコチョ」
-        </p>
-
-        <p>
-          ・2本指 👌<br>
-          指を置くと「つまむ」<br>
-          → ゆっくりスライドで「運ぶ」<br>
-          → 小刻みスライドで「揺らす」
-        </p>
-
-        <h3>【せんすいちゅう】─▲</h3>
-
-        <p>
-          1本指 ☝️<br>
-          ・指を置くと「注目」！<br>
-          → ゆっくりスライドで「おいかけっこ」<br>
-          → 小刻みスライドで「スイスイ」<br>
-          ・2回タップで【おさんぽ】に戻る！
-        </p>
-
-        <p class="small-note">
-          ※困ったらリロード 🔁 してね！
-        </p>
-
-        <button class="panel-close">とじる</button>
-
-      </div>
-
-    </div>
-
-    <!-- おやくそく -->
-    <div id="rules-panel" class="info-panel">
-
-      <div class="info-inner">
-
-        <h2>○ おやくそく ○</h2>
-
-        <p>
-          このゲームのスクリーンショットや動画は、
-          個人で楽しむ範囲で自由にどうぞ！
-        </p>
-
-        <p>
-          ネットに投稿するときもOKです。<br>
-          できれば「びむたんぽけっと」と
-          分かるようにしてもらえるとうれしいです。
-        </p>
-
-        <p>
-          作者への連絡先などは、
-          公開時にここへ追記します。
-        </p>
-
-        <button class="panel-close">とじる</button>
-
-      </div>
-
-    </div>
-
-    <!-- ビーム -->
+    <!-- ゲーム本体 -->
     <div id="beam">
-      <img id="beam-image" src="./beam.png" alt="">
+      <img src="./beam.png" alt="ビーム">
     </div>
 
-    <!-- 背ビレ -->
-    <div id="fin">
-      <img id="fin-image" src="./beam_fin.png" alt="">
-    </div>
+
+    <!-- 背ビレモード -->
+    <div id="fin">▲</div>
+
 
     <!-- セリフ -->
     <p id="message">画面をタップ！</p>
 
+
+    <!-- メニュー -->
+    <div id="menu-panel">
+
+      <button id="howto-button" type="button">
+        あそびかた
+      </button>
+
+      <button id="rules-button" type="button">
+        おやくそく
+      </button>
+
+      <button id="menu-close-button" type="button">
+        とじる
+      </button>
+
+    </div>
+
+
+    <!-- あそびかた -->
+    <div id="howto-panel" class="info-panel">
+
+      <h2>○ あそびかた ○</h2>
+
+      <h3>【おさんぽ】🕺</h3>
+
+      <p>
+        <strong>・1本指 👆</strong><br>
+        指を置くと「止まる」<br>
+        (ロレンチーニ器官…！？)<br>
+        → 小刻みスライドで「コチョコチョ」
+      </p>
+
+      <p>
+        <strong>・2本指 👌</strong><br>
+        指を置くと「つまむ」<br>
+        → ゆっくりスライドで「運ぶ」<br>
+        → 小刻みスライドで「揺らす」
+      </p>
+
+
+      <h3>【せんすいちゅう】─▲</h3>
+
+      <p>
+        <strong>1本指 ☝️</strong><br>
+        ・指を置くと「注目」！<br>
+        → ゆっくりスライドで「おいかけっこ」<br>
+        → 小刻みスライドで「スイスイ」
+      </p>
+
+      <p>
+        ・2回タップで【おさんぽ】に戻る！
+      </p>
+
+      <p>
+        ※困ったらリロード 🔁してね！
+      </p>
+
+      <button class="panel-close" type="button">
+        とじる
+      </button>
+
+    </div>
+
+
+    <!-- おやくそく -->
+    <div id="rules-panel" class="info-panel">
+
+      <h2>○ おやくそく ○</h2>
+
+      <p>
+        このゲームのスクリーンショットや動画は、<br>
+        SNSなどに投稿してOKです！
+      </p>
+
+      <p>
+        「こんな遊び方した！」など、<br>
+        楽しんでもらえたらうれしいです。
+      </p>
+
+      <p>
+        不具合・お問い合わせなどは、<br>
+        制作者までご連絡ください。
+      </p>
+
+      <button class="panel-close" type="button">
+        とじる
+      </button>
+
+    </div>
+
   </div>
+
 
   <script src="./script.js"></script>
 
