@@ -13,45 +13,36 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: sans-serif;
+}
+
+body {
   background: #eeeeee;
-  touch-action: manipulation;
-}
-
-button {
-  font: inherit;
-}
-
-button:focus {
-  outline: none;
+  font-family: sans-serif;
+  color: #333;
+  touch-action: none;
 }
 
 
 /* =========================================================
-   ゲーム画面
+   アプリ全体
 ========================================================= */
 
-#game {
+#app {
   position: relative;
 
-  width: 100%;
+  width: min(100vw, 520px);
   height: 100dvh;
 
+  margin: 0 auto;
+
+  background: #eeeeee;
+
   overflow: hidden;
-
-  background: white;
-
-  border: 2px solid #333;
-
-  touch-action: none;
-
-  user-select: none;
 }
 
 
 /* =========================================================
    上部UI
-   ※ここはビーム操作判定から除外
 ========================================================= */
 
 #top-ui {
@@ -61,121 +52,214 @@ button:focus {
   left: 0;
 
   width: 100%;
-
   height: 58px;
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   padding: 8px 12px;
 
-  z-index: 100;
+  z-index: 1000;
 
-  pointer-events: auto;
+  pointer-events: none;
 }
 
+#game-title {
+  padding: 5px 10px;
 
-/* =========================================================
-   タイトル
-========================================================= */
-
-#title {
   font-size: 20px;
   font-weight: bold;
 
-  white-space: nowrap;
-
   background: rgba(255, 255, 255, 0.9);
 
-  padding: 5px 9px;
+  border-radius: 12px;
 
-  border-radius: 8px;
+  pointer-events: none;
 }
 
-
-/* =========================================================
-   メニューボタン
-========================================================= */
-
 #menu-button {
-  margin-left: auto;
+  padding: 8px 13px;
 
-  padding: 6px 12px;
+  font-size: 15px;
+  font-weight: bold;
 
   border: 2px solid #333;
-  border-radius: 20px;
+  border-radius: 999px;
 
   background: white;
 
-  color: #333;
-
   cursor: pointer;
+
+  pointer-events: auto;
 
   touch-action: manipulation;
 }
 
-#menu-button:active {
-  transform: scale(0.95);
-}
-
 
 /* =========================================================
-   メニューパネル
+   メニュー
 ========================================================= */
 
 #menu-panel {
   position: absolute;
 
-  top: 58px;
+  top: 62px;
   right: 12px;
 
-  z-index: 200;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 8px;
+  width: 150px;
 
   padding: 10px;
 
-  background: rgba(255, 255, 255, 0.96);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+
+  background: rgba(255, 255, 255, 0.97);
 
   border: 2px solid #333;
-  border-radius: 12px;
+  border-radius: 14px;
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
-  pointer-events: auto;
+  z-index: 1100;
 }
 
-#menu-panel.hidden {
-  display: none;
+#menu-panel.open {
+  display: flex;
 }
-
-
-/* =========================================================
-   メニュー項目
-========================================================= */
 
 .menu-item {
-  min-width: 120px;
+  width: 100%;
 
-  padding: 9px 14px;
+  padding: 10px;
 
-  border: 1px solid #777;
-  border-radius: 8px;
+  font-size: 16px;
 
   background: white;
 
-  color: #333;
+  border: 1px solid #555;
+  border-radius: 10px;
 
   cursor: pointer;
 
   touch-action: manipulation;
 }
 
-.menu-item:active {
-  transform: scale(0.96);
+
+/* =========================================================
+   説明・おやくそく
+========================================================= */
+
+#info-panel {
+  position: absolute;
+
+  inset: 0;
+
+  display: none;
+
+  z-index: 1200;
+
+  background: rgba(238, 238, 238, 0.96);
+
+  overflow-y: auto;
+
+  padding: 70px 18px 30px;
+
+  touch-action: pan-y;
+}
+
+#info-panel.open {
+  display: block;
+}
+
+.info-page {
+  display: none;
+
+  position: relative;
+
+  max-width: 480px;
+
+  margin: 0 auto;
+
+  padding: 22px;
+
+  background: white;
+
+  border: 2px solid #333;
+  border-radius: 18px;
+}
+
+.info-page.active {
+  display: block;
+}
+
+.info-page h2 {
+  margin-top: 0;
+
+  text-align: center;
+
+  font-size: 24px;
+}
+
+.info-page h3 {
+  margin-bottom: 8px;
+
+  font-size: 19px;
+}
+
+.info-page p {
+  line-height: 1.8;
+
+  font-size: 16px;
+}
+
+.info-close {
+  position: absolute;
+
+  top: 8px;
+  right: 10px;
+
+  width: 38px;
+  height: 38px;
+
+  font-size: 26px;
+
+  background: white;
+
+  border: 1px solid #777;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.small-note {
+  font-size: 13px !important;
+  color: #666;
+}
+
+
+/* =========================================================
+   ゲーム領域
+========================================================= */
+
+#game {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 58px;
+  bottom: 0;
+
+  overflow: hidden;
+
+  background: white;
+
+  border: 2px solid #333;
+  border-radius: 0;
+
+  touch-action: none;
+
+  z-index: 1;
 }
 
 
@@ -186,222 +270,28 @@ button:focus {
 #beam {
   position: absolute;
 
-  left: 50%;
-  top: 50%;
-
-  width: min(180px, 32vw);
-  height: auto;
+  width: 100px;
+  height: 100px;
 
   transform:
     translate(-50%, -50%);
 
-  object-fit: contain;
-
   user-select: none;
+
   pointer-events: none;
 
-  z-index: 10;
+  z-index: 20;
 }
 
-
-/* =========================================================
-   背びれ
-========================================================= */
-
-#fin {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: min(120px, 20vw);
-  height: auto;
-
-  transform:
-    translate(-50%, -50%);
-
-  object-fit: contain;
-
-  user-select: none;
-  pointer-events: none;
-
-  z-index: 10;
-}
-
-
-/* =========================================================
-   セリフ
-========================================================= */
-
-#message {
-  position: absolute;
-
-  left: 0;
-  bottom: 18px;
-
+#beam-image {
   width: 100%;
+  height: 100%;
 
-  margin: 0;
+  object-fit: contain;
 
-  padding: 0 12px;
-
-  text-align: center;
-
-  font-size: 20px;
-  font-weight: bold;
-
-  color: #222;
-
-  pointer-events: none;
-
-  z-index: 80;
-}
-
-
-/* =========================================================
-   説明オーバーレイ
-========================================================= */
-
-#info-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 500;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 70px 18px 30px;
-
-  background: rgba(0, 0, 0, 0.35);
-
-  pointer-events: auto;
-}
-
-#info-overlay.hidden {
-  display: none;
-}
-
-
-/* =========================================================
-   説明ウィンドウ
-========================================================= */
-
-#info-window {
-  position: relative;
-
-  width: min(560px, 100%);
-  max-height: 100%;
-
-  overflow-y: auto;
-
-  padding: 28px 22px 30px;
-
-  background: white;
-
-  border: 2px solid #333;
-  border-radius: 14px;
-
-  color: #333;
-
-  -webkit-overflow-scrolling: touch;
-
-  touch-action: pan-y;
-}
-
-
-/* =========================================================
-   説明閉じる
-========================================================= */
-
-#info-close {
-  position: sticky;
-
-  float: right;
-
-  top: 0;
-
-  width: 36px;
-  height: 36px;
-
-  margin-left: 8px;
-
-  border: 2px solid #333;
-  border-radius: 50%;
-
-  background: white;
-
-  font-size: 24px;
-  line-height: 1;
-
-  cursor: pointer;
-
-  z-index: 10;
-}
-
-
-/* =========================================================
-   説明本文
-========================================================= */
-
-.info-section {
   display: block;
 
-  clear: both;
-
-  padding-top: 4px;
-}
-
-.info-section.hidden {
-  display: none;
-}
-
-.info-section h2 {
-  margin: 4px 0 24px;
-
-  text-align: center;
-
-  font-size: 24px;
-}
-
-.info-section h3 {
-  margin: 22px 0 12px;
-
-  font-size: 20px;
-}
-
-.info-section p {
-  margin: 9px 0;
-
-  line-height: 1.7;
-
-  font-size: 16px;
-}
-
-
-/* =========================================================
-   指表示
-========================================================= */
-
-.touch-indicator {
-  position: fixed;
-
-  z-index: 9999;
-
   pointer-events: none;
-
-  font-size: 34px;
-  line-height: 1;
-
-  color: #555;
-
-  font-weight: bold;
-
-  transform:
-    translate(-50%, -50%);
 }
 
 
@@ -428,44 +318,68 @@ button:focus {
 
 
 /* =========================================================
-   タップジャンプ
+   通常ジャンプ
 ========================================================= */
 
 #beam.jump {
   animation:
-    jump 0.65s ease-out;
+    jump 0.55s cubic-bezier(0.22, 0.75, 0.35, 1);
 }
 
 @keyframes jump {
 
   0% {
     margin-top: 0;
-    transform:
-      translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
   }
 
-  18% {
-    margin-top: -18px;
-    transform:
-      translate(-50%, -50%);
+  35% {
+    margin-top: -75px;
+    transform: translate(-50%, -50%) scale(1.04);
   }
 
-  55% {
-    margin-top: -110px;
-    transform:
-      translate(-50%, -50%);
-  }
-
-  78% {
-    margin-top: -85px;
-    transform:
-      translate(-50%, -50%);
+  65% {
+    margin-top: -70px;
+    transform: translate(-50%, -50%) scale(1.03);
   }
 
   100% {
     margin-top: 0;
-    transform:
-      translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   最大くすぐり後：大ジャンプ
+========================================================= */
+
+#beam.big-jump {
+  animation:
+    big-jump 1.0s cubic-bezier(0.18, 0.8, 0.3, 1);
+}
+
+@keyframes big-jump {
+
+  0% {
+    margin-top: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  35% {
+    margin-top: -125px;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  65% {
+    margin-top: -120px;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  100% {
+    margin-top: 0;
+    transform: translate(-50%, -50%) scale(1);
   }
 
 }
@@ -586,7 +500,7 @@ button:focus {
 
 
 /* =========================================================
-   くすぐり Lv.1
+   くすぐり
 ========================================================= */
 
 #beam.tickled[data-tickle-level="1"] {
@@ -609,11 +523,6 @@ button:focus {
   }
 
 }
-
-
-/* =========================================================
-   くすぐり Lv.2
-========================================================= */
 
 #beam.tickled[data-tickle-level="2"] {
   animation:
@@ -638,11 +547,6 @@ button:focus {
 
 }
 
-
-/* =========================================================
-   くすぐり Lv.3
-========================================================= */
-
 #beam.tickled[data-tickle-level="3"] {
   animation:
     tickle3 0.08s ease-in-out infinite alternate;
@@ -665,11 +569,6 @@ button:focus {
   }
 
 }
-
-
-/* =========================================================
-   くすぐり最大
-========================================================= */
 
 #beam.tickled[data-tickle-level="4"] {
   animation:
@@ -696,7 +595,7 @@ button:focus {
 
 
 /* =========================================================
-   最大級くすぐり
+   最大くすぐり
 ========================================================= */
 
 #beam.tickle-max {
@@ -720,50 +619,6 @@ button:focus {
       rotate(22deg)
       scale(1.1)
       translateX(16px);
-  }
-
-}
-
-
-/* =========================================================
-   最大くすぐり後の高いジャンプ
-========================================================= */
-
-#beam.high-jump {
-  animation:
-    high-jump 1.15s ease-out;
-}
-
-@keyframes high-jump {
-
-  0% {
-    margin-top: 0;
-    transform:
-      translate(-50%, -50%);
-  }
-
-  25% {
-    margin-top: -60px;
-    transform:
-      translate(-50%, -50%);
-  }
-
-  55% {
-    margin-top: -180px;
-    transform:
-      translate(-50%, -50%);
-  }
-
-  75% {
-    margin-top: -170px;
-    transform:
-      translate(-50%, -50%);
-  }
-
-  100% {
-    margin-top: 0;
-    transform:
-      translate(-50%, -50%);
   }
 
 }
@@ -820,30 +675,133 @@ button:focus {
 
 
 /* =========================================================
-   小さな画面
+   背ビレ
 ========================================================= */
 
-@media (max-width: 500px) {
+#fin {
+  position: absolute;
 
-  #title {
-    font-size: 17px;
+  width: 75px;
+  height: 75px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: none;
+
+  user-select: none;
+
+  pointer-events: none;
+
+  z-index: 20;
+}
+
+#fin-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   メッセージ
+========================================================= */
+
+#message {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: 15px;
+
+  min-height: 32px;
+
+  padding: 0 12px;
+
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  pointer-events: none;
+
+  z-index: 100;
+}
+
+
+/* =========================================================
+   指表示
+========================================================= */
+
+.touch-indicator {
+  position: fixed;
+
+  width: 38px;
+  height: 38px;
+
+  border: 3px solid #555;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  pointer-events: none;
+
+  z-index: 99999;
+
+  transform: translate(-50%, -50%);
+}
+
+
+/* =========================================================
+   ✨
+========================================================= */
+
+.sparkle {
+  position: fixed;
+
+  pointer-events: none;
+
+  z-index: 99998;
+
+  font-size: 28px;
+
+  transform: translate(-50%, -50%);
+}
+
+
+/* =========================================================
+   小さい画面
+========================================================= */
+
+@media (max-height: 600px) {
+
+  #top-ui {
+    height: 50px;
+  }
+
+  #game {
+    top: 50px;
   }
 
   #message {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   #beam {
-    width: min(160px, 42vw);
+    width: 85px;
+    height: 85px;
   }
 
   #fin {
-    width: min(100px, 24vw);
-  }
-
-  #info-window {
-    padding-left: 18px;
-    padding-right: 18px;
+    width: 65px;
+    height: 65px;
   }
 
 }
