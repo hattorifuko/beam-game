@@ -14,238 +14,165 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 
-
 <body>
 
-  <!-- =========================================
-       ゲーム全体
-  ========================================== -->
+  <div id="app">
 
-  <div id="game">
-
-
-    <!-- =======================================
+    <!-- =========================
          上部UI
-         ※ここはゲーム操作の判定対象外
-    ======================================== -->
+    ========================== -->
 
     <header id="top-ui">
 
-      <div id="title">
+      <div id="game-title">
         びむたんぽけっと
       </div>
 
-      <button
-        id="menu-button"
-        type="button"
-      >
+      <button id="menu-button" type="button">
         メニュー
       </button>
 
     </header>
 
 
-    <!-- =======================================
+    <!-- =========================
          メニュー
-         最初は非表示
-    ======================================== -->
+    ========================== -->
 
-    <div
-      id="menu-panel"
-      class="hidden"
-    >
+    <div id="menu-panel">
 
-      <button
-        class="menu-item"
-        id="howto-button"
-        type="button"
-      >
+      <button class="menu-item" id="howto-button" type="button">
         あそびかた
       </button>
 
-      <button
-        class="menu-item"
-        id="rules-button"
-        type="button"
-      >
+      <button class="menu-item" id="rules-button" type="button">
         おやくそく
       </button>
 
-      <button
-        class="menu-item"
-        id="close-menu-button"
-        type="button"
-      >
+      <button class="menu-item" id="menu-close-button" type="button">
         とじる
       </button>
 
     </div>
 
 
-    <!-- =======================================
-         ビーム
-         通常モード
-    ======================================== -->
+    <!-- =========================
+         説明書
+    ========================== -->
 
-    <img
-      id="beam"
-      src="./beam.png"
-      alt="ビーム"
-    >
+    <div id="info-panel">
 
+      <div id="howto-panel" class="info-page">
 
-    <!-- =======================================
-         背びれモード
-    ======================================== -->
-
-    <img
-      id="fin"
-      src="./beam_fin.png"
-      alt="背びれ"
-    >
-
-
-    <!-- =======================================
-         セリフ
-    ======================================== -->
-
-    <p id="message">
-      画面をタップ！
-    </p>
-
-
-    <!-- =======================================
-         説明モーダル
-    ======================================== -->
-
-    <div
-      id="info-overlay"
-      class="hidden"
-    >
-
-      <div id="info-window">
-
-        <button
-          id="info-close"
-          type="button"
-        >
+        <button class="info-close" type="button">
           ×
         </button>
 
+        <h2>○ あそびかた ○</h2>
 
-        <!-- あそびかた -->
-
-        <section
-          id="howto-section"
-          class="info-section hidden"
-        >
-
-          <h2>○ あそびかた ○</h2>
+        <section>
 
           <h3>【おさんぽ】🕺</h3>
 
           <p>
-            ・1本指 👆
-          </p>
-
-          <p>
-            指を置くと「止まる」
-            <br>
-            (ロレンチーニ器官…！？)
-          </p>
-
-          <p>
+            <strong>・1本指 👆</strong><br>
+            指を置くと「止まる」<br>
+            （ロレンチーニ器官…！？）<br>
             → 小刻みスライドで「コチョコチョ」
           </p>
 
-
           <p>
-            ・2本指 👌
-          </p>
-
-          <p>
-            指を置くと「つまむ」
-          </p>
-
-          <p>
-            → ゆっくりスライドで「運ぶ」
-          </p>
-
-          <p>
+            <strong>・2本指 👌</strong><br>
+            指を置くと「つまむ」<br>
+            → ゆっくりスライドで「運ぶ」<br>
             → 小刻みスライドで「揺らす」
           </p>
 
+        </section>
+
+
+        <section>
 
           <h3>【せんすいちゅう】─▲</h3>
 
           <p>
-            ・1本指 ☝️
-          </p>
-
-          <p>
-            指を置くと「注目」！
-          </p>
-
-          <p>
-            → ゆっくりスライドで「おいかけっこ」
-          </p>
-
-          <p>
+            <strong>・1本指 ☝️</strong><br>
+            指を置くと「注目」！<br>
+            → ゆっくりスライドで「おいかけっこ」<br>
             → 小刻みスライドで「スイスイ」
           </p>
 
-
           <p>
-            ・2回タップで【おさんぽ】に戻る！
-          </p>
-
-
-          <p>
-            ※困ったらリロード 🔁 してね！
+            <strong>・2回タップ</strong><br>
+            → 【おさんぽ】に戻る！
           </p>
 
         </section>
 
+        <p class="small-note">
+          ※困ったらリロード 🔁 してね！
+        </p>
 
-        <!-- おやくそく -->
+      </div>
 
-        <section
-          id="rules-section"
-          class="info-section hidden"
-        >
 
-          <h2>○ おやくそく ○</h2>
+      <div id="rules-panel" class="info-page">
 
-          <p>
-            このゲームは個人制作のファンゲームです。
-          </p>
+        <button class="info-close" type="button">
+          ×
+        </button>
 
-          <p>
-            ゲーム画面のスクリーンショットや動画を
-            SNSなどに投稿してOKです。
-          </p>
+        <h2>○ おやくそく ○</h2>
 
-          <p>
-            投稿するときは、作品名や作者が分かるように
-            書いてもらえるとうれしいです。
-          </p>
+        <p>
+          このゲームのスクリーンショットや動画は、
+          個人で楽しむ範囲やSNSへの投稿など、
+          常識的な範囲でご自由にどうぞ！
+        </p>
 
-          <p>
-            ゲームの内容や画像そのものを
-            自分の作品として再配布・販売することは
-            ご遠慮ください。
-          </p>
+        <p>
+          ゲームを楽しんでもらえたらうれしいです。
+        </p>
 
-          <p>
-            不具合があった場合は、
-            ページをリロードすると直ることがあります。
-          </p>
+        <p>
+          不具合・感想・連絡などは、
+          作者のSNS等からお願いします。
+        </p>
 
-        </section>
+        <p class="small-note">
+          ※現在は仮文です。正式公開前に内容を整えます。
+        </p>
 
       </div>
 
     </div>
+
+
+    <!-- =========================
+         ゲーム
+    ========================== -->
+
+    <main id="game">
+
+      <div id="beam">
+        <img
+          id="beam-image"
+          src="./beam.png"
+          alt=""
+        >
+      </div>
+
+      <div id="fin">
+        <img
+          id="fin-image"
+          src="./beam_fin.png"
+          alt=""
+        >
+      </div>
+
+      <div id="message"></div>
+
+    </main>
 
   </div>
 
