@@ -1387,6 +1387,8 @@ finMaxSpeedMode = false;
 finRapidMovement = 0;
 
 finRapidLastTime = 0;
+
+finTapCount = 0;
   
   finFastStartedAt =
     Date.now();
