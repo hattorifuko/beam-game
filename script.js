@@ -1981,25 +1981,28 @@ function checkFinRapidMovement(
     }
 
 
-    /*
-      高速周回中は、
-      さらに4回の大きな動きで最高速へ。
-    */
+/*
+  高速周回中は、
+  さらに4回の大きな動きで最高速へ。
 
-    else if (
-      finFastMode &&
-      !finMaxSpeedMode &&
-      finRapidMovement >= 4
-    ) {
+  ただし、高速周回開始から
+  3秒経つまでは最高速にしない。
+*/
 
-      startFinMaxSpeed();
+else if (
+  finFastMode &&
+  !finMaxSpeedMode &&
+  Date.now() - finFastStartedAt >= FIN_FAST_MAX_TIME &&
+  finRapidMovement >= 4
+) {
 
-      finRapidMovement = 0;
+  startFinMaxSpeed();
 
-      finRapidLastTime = 0;
+  finRapidMovement = 0;
 
-    }
+  finRapidLastTime = 0;
 
+}
   }
 
 
