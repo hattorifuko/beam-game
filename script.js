@@ -12,12 +12,14 @@ const menuPanel = document.getElementById("menu-panel");
 
 const howtoButton = document.getElementById("howto-button");
 const rulesButton = document.getElementById("rules-button");
+const shiryoButton = document.getElementById("shiryo-button");
 const menuCloseButton =
   document.getElementById("menu-close-button");
 
 const infoPanel = document.getElementById("info-panel");
 const howtoPanel = document.getElementById("howto-panel");
 const rulesPanel = document.getElementById("rules-panel");
+const materialsPanel = document.getElementById("materials-panel");
 
 const infoCloseButtons =
   document.querySelectorAll(".info-close");
@@ -109,6 +111,20 @@ rulesButton.addEventListener("click", function(event) {
 
 });
 
+shiryoButton.addEventListener("click", function(event) {
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  closeMenu();
+
+  howtoPanel.classList.remove("active");
+  rulesPanel.classList.remove("active");
+  materialsPanel.classList.add("active");
+
+  infoPanel.classList.add("open");
+
+});
 
 menuCloseButton.addEventListener("click", function(event) {
 
