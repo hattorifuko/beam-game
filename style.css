@@ -805,3 +805,37 @@ body {
   }
 
 }
+/* =========================================================
+   しりょう
+========================================================= */
+
+#materials-panel {
+  overflow-x: hidden;
+}
+
+#materials-panel .material-number {
+  font-family: serif;
+  font-style: italic;
+  text-align: center;
+}
+
+#materials-panel .material-number span {
+  font-size: 0.8em;
+}
+
+#materials-panel .material-card {
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+}
+
+#materials-panel .material-card img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
