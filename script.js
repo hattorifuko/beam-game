@@ -1382,8 +1382,12 @@ function startFinFastMode() {
 
   finFastMode = true;
 
-  finMaxSpeedMode = false;
+finMaxSpeedMode = false;
 
+finRapidMovement = 0;
+
+finRapidLastTime = 0;
+  
   finFastStartedAt =
     Date.now();
 
@@ -1908,8 +1912,6 @@ function checkFinRapidMovement(
 
   if (!finHoldRecognized) return;
 
-  if (finFastMode) return;
-
   if (Date.now() < finHoldPauseUntil) return;
 
 
@@ -1932,13 +1934,8 @@ function checkFinRapidMovement(
 
 
   /*
-    ここをかなり厳しくする。
-
-    7px程度の微妙な指揺れでは
-    高速周回に入らない。
-
-    1回の移動量 10px以上
-    かつ短時間に複数回
+    1回の移動量が10px以上の
+    大きな指の動きだけを数える。
   */
 
   if (distance >= 10) {
@@ -1963,11 +1960,41 @@ function checkFinRapidMovement(
       now;
 
 
+    /*
+      まだ高速周回に入っていない場合
+      4回の大きな動きで高速周回へ。
+    */
+
     if (
+      !finFastMode &&
       finRapidMovement >= 4
     ) {
 
       startFinFastMode();
+
+      finRapidMovement = 0;
+
+      finRapidLastTime = 0;
+
+    }
+
+
+    /*
+      高速周回中は、
+      さらに4回の大きな動きで最高速へ。
+    */
+
+    else if (
+      finFastMode &&
+      !finMaxSpeedMode &&
+      finRapidMovement >= 4
+    ) {
+
+      startFinMaxSpeed();
+
+      finRapidMovement = 0;
+
+      finRapidLastTime = 0;
 
     }
 
