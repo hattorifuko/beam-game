@@ -145,8 +145,9 @@ infoCloseButtons.forEach(function(button) {
 
     infoPanel.classList.remove("open");
 
-    howtoPanel.classList.remove("active");
-    rulesPanel.classList.remove("active");
+howtoPanel.classList.remove("active");
+rulesPanel.classList.remove("active");
+materialsPanel.classList.remove("active");
 
   });
 
