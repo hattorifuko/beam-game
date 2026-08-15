@@ -707,7 +707,7 @@ function setFinDirection() {
 
     rotation = 0;
 
-    flip = true;
+    flip = false;
 
   }
 
