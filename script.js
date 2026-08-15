@@ -2774,42 +2774,47 @@ game.addEventListener(
 
       if (finMaxSpeedMode) {
 
-        releaseFinFastMode();
+  releaseFinFastMode();
 
-        return;
+  return;
 
-      }
-
-
-      if (finFastMode) {
-
-        releaseFinFastMode();
-
-        return;
-
-      }
+}
 
 
-      if (finHoldRecognized) {
+/*
+  高速周回中は
+  ダブルタップを判定する。
+*/
 
-        finHoldRecognized = false;
+if (finFastMode) {
 
-        clearMessage();
+  registerFinTap();
 
-        resetFinAutoExitTimer();
+  return;
 
-        return;
-
-      }
+}
 
 
-      /*
-        1秒未満ならタップ。
-      */
+if (finHoldRecognized) {
 
-      registerFinTap();
+  finHoldRecognized = false;
 
-      return;
+  clearMessage();
+
+  resetFinAutoExitTimer();
+
+  return;
+
+}
+
+
+/*
+  1秒未満ならタップ。
+*/
+
+registerFinTap();
+
+return;
 
     }
 
