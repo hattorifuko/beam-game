@@ -919,3 +919,23 @@ body {
   }
 
 }
+
+/* ============================================================
+   お面モード：ビームのスリスリ
+============================================================ */
+
+#beam.mask-rubbing {
+  animation: beam-mask-rubbing 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes beam-mask-rubbing {
+
+  from {
+    transform: rotate(-30deg);
+  }
+
+  to {
+    transform: rotate(30deg);
+  }
+
+}
