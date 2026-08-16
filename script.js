@@ -3270,6 +3270,28 @@ game.addEventListener(
 
 function moveBeam() {
 
+function moveBeam() {
+
+  if (maskMode) {
+
+    if (
+      maskFollowing &&
+      !maskReaction
+    ) {
+
+      moveBeamTowardMask();
+
+    }
+
+    checkMaskRubbingDistance();
+
+  }
+
+
+  if (mode === "normal") {
+
+    // ↓ここから既存コード
+  
   if (mode === "normal") {
 
     x += dx;
@@ -3734,7 +3756,69 @@ function startMaskRubbing() {
 
 }
 
+function checkMaskRubbingDistance() {
 
+  if (!maskRubbing) return;
+
+  const beamRect =
+    beam.getBoundingClientRect();
+
+  const maskRect =
+    denjiMask.getBoundingClientRect();
+
+
+  const beamCenterX =
+    beamRect.left +
+    beamRect.width / 2;
+
+  const beamCenterY =
+    beamRect.top +
+    beamRect.height / 2;
+
+  const maskCenterX =
+    maskRect.left +
+    maskRect.width / 2;
+
+  const maskCenterY =
+    maskRect.top +
+    maskRect.height / 2;
+
+
+  const distance =
+    Math.sqrt(
+      Math.pow(
+        maskCenterX - beamCenterX,
+        2
+      ) +
+      Math.pow(
+        maskCenterY - beamCenterY,
+        2
+      )
+    );
+
+
+  /*
+    少し離れただけでは解除しない。
+    お面が明確に別の場所へ移動したら解除。
+  */
+
+  if (distance > 90) {
+
+    maskRubbing = false;
+
+    beam.classList.remove(
+      "mask-rubbing"
+    );
+
+    beam.classList.add(
+      "mask-following"
+    );
+
+    clearMessage();
+
+  }
+
+}
 
 // ============================================================
 // 状態リセット用
