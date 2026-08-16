@@ -895,3 +895,27 @@ body {
   height: auto;
   margin: 0 auto;
 }
+
+/* ============================================================
+   お面モード：ルンルン追跡
+============================================================ */
+
+#beam.mask-following {
+  animation: mask-skip 0.5s ease-in-out infinite;
+}
+
+@keyframes mask-skip {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+
+}
