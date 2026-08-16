@@ -3558,6 +3558,9 @@ function startMaskFirstReaction() {
       maskReaction = false;
       maskFollowing = true;
 
+beam.classList.add(
+  "mask-following"
+);
     }, 2350);
 
 }
@@ -3705,6 +3708,31 @@ function moveBeamTowardMask() {
 
 }
 
+// ============================================================
+// お面：スリスリ
+// ============================================================
+
+function startMaskRubbing() {
+
+  if (!maskMode) return;
+  if (maskRubbing) return;
+
+  maskRubbing = true;
+
+  beam.classList.remove(
+    "mask-following"
+  );
+
+  showMessage(
+    "キャキャッ！ チェンソーさまぁ〜〜！！"
+  );
+
+
+  beam.classList.add(
+    "mask-rubbing"
+  );
+
+}
 
 
 
