@@ -51,8 +51,6 @@ let dy = 0.05;
 // お面モード
 // ============================================================
 
-let maskFirstTap = false;
-
 let maskReaction = false;
 
 let maskFollowing = false;
