@@ -2246,12 +2246,14 @@ game.addEventListener(
 
       clearMessage();
 
-      denjiMask.style.left =
-  touch.clientX + "px";
+const rect =
+  game.getBoundingClientRect();
+
+denjiMask.style.left =
+  (touch.clientX - rect.left) + "px";
 
 denjiMask.style.top =
-  (touch.clientY - 90) + "px";
-
+  (touch.clientY - rect.top - 90) + "px";
 denjiMask.style.display =
   "block";
 
