@@ -2252,9 +2252,6 @@ game.addEventListener(
 denjiMask.style.top =
   (touch.clientY - 90) + "px";
 
-denjiMask.style.transform =
-  "translate(-50%, -50%)";
-
 denjiMask.style.display =
   "block";
 
