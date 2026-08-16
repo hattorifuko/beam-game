@@ -2247,13 +2247,16 @@ game.addEventListener(
       clearMessage();
 
       denjiMask.style.left =
-        touch.clientX + "px";
+  touch.clientX + "px";
 
-      denjiMask.style.top =
-        touch.clientY + "px";
+denjiMask.style.top =
+  (touch.clientY - 90) + "px";
 
-      denjiMask.style.display =
-        "block";
+denjiMask.style.transform =
+  "translate(-50%, -50%)";
+
+denjiMask.style.display =
+  "block";
 
       return;
 
