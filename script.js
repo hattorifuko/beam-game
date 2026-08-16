@@ -13,6 +13,7 @@ const menuPanel = document.getElementById("menu-panel");
 const howtoButton = document.getElementById("howto-button");
 const rulesButton = document.getElementById("rules-button");
 const shiryoButton = document.getElementById("shiryo-button");
+const maskButton = document.getElementById("mask-button");
 const menuCloseButton =
   document.getElementById("menu-close-button");
 
@@ -30,6 +31,8 @@ const infoCloseButtons =
 // ============================================================
 
 let mode = "normal";
+
+let maskMode = false;
 
 let x = 50;
 let y = 50;
@@ -123,6 +126,31 @@ shiryoButton.addEventListener("click", function(event) {
   materialsPanel.classList.add("active");
 
   infoPanel.classList.add("open");
+
+});
+
+maskButton.addEventListener("click", function(event) {
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  maskMode = !maskMode;
+
+  if (maskMode) {
+
+    maskButton.textContent =
+      "おめん とる";
+
+  }
+
+  else {
+
+    maskButton.textContent =
+      "おめん つける";
+
+  }
+
+  closeMenu();
 
 });
 
