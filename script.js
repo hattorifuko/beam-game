@@ -3270,8 +3270,6 @@ game.addEventListener(
 
 function moveBeam() {
 
-function moveBeam() {
-
   if (maskMode) {
 
     if (
@@ -3288,10 +3286,6 @@ function moveBeam() {
   }
 
 
-  if (mode === "normal") {
-
-    // ↓ここから既存コード
-  
   if (mode === "normal") {
 
     x += dx;
