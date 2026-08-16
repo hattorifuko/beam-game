@@ -1,6 +1,12 @@
 const beam = document.getElementById("beam");
 const beamImage = document.getElementById("beam-image");
 
+const denjiMask =
+  document.getElementById("denji-mask");
+
+const denjiMaskImage =
+  document.getElementById("denji-mask-image");
+
 const fin = document.getElementById("fin");
 const finImage = document.getElementById("fin-image");
 
@@ -33,6 +39,7 @@ const infoCloseButtons =
 let mode = "normal";
 
 let maskMode = false;
+let maskFirstTap = false;
 
 let x = 50;
 let y = 50;
@@ -138,12 +145,28 @@ maskButton.addEventListener("click", function(event) {
 
   if (maskMode) {
 
+    maskFirstTap = false;
+
+    denjiMask.style.display =
+      "none";
+
+    showMessage(
+      "キミはお面を付けた！画面をタップしてみよう！"
+    );
+
     maskButton.textContent =
       "おめん とる";
 
   }
 
   else {
+
+    maskFirstTap = false;
+
+    denjiMask.style.display =
+      "none";
+
+    clearMessage();
 
     maskButton.textContent =
       "おめん つける";
@@ -2206,7 +2229,36 @@ game.addEventListener(
 
     updateLastInteraction();
 
+    // ========================================================
+    // お面モード：初回タップ
+    // ========================================================
 
+    if (
+      maskMode &&
+      !maskFirstTap &&
+      event.touches.length === 1
+    ) {
+
+      const touch =
+        event.touches[0];
+
+      maskFirstTap = true;
+
+      clearMessage();
+
+      denjiMask.style.left =
+        touch.clientX + "px";
+
+      denjiMask.style.top =
+        touch.clientY + "px";
+
+      denjiMask.style.display =
+        "block";
+
+      return;
+
+    }
+    
     Array.from(
       event.changedTouches
     ).forEach(function(touch) {
