@@ -2253,7 +2253,7 @@ denjiMask.style.left =
   (touch.clientX - rect.left) + "px";
 
 denjiMask.style.top =
-  (touch.clientY - rect.top - 90) + "px";
+  (touch.clientY - rect.top - 20) + "px";
 denjiMask.style.display =
   "block";
 
