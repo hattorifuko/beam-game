@@ -47,6 +47,27 @@ let y = 50;
 let dx = 0.08;
 let dy = 0.05;
 
+// ============================================================
+// お面モード
+// ============================================================
+
+let maskFirstTap = false;
+
+let maskReaction = false;
+
+let maskFollowing = false;
+
+let maskRubbing = false;
+
+let maskTargetX = 50;
+let maskTargetY = 50;
+
+let maskRubbingTimer = null;
+let maskReactionTimer = null;
+
+let maskTapCount = 0;
+let maskTapTimer = null;
+
 let lastInteractionTime = Date.now();
 
 let normalTimer = null;
@@ -3422,6 +3443,269 @@ setInterval(function() {
   }
 
 }, 100);
+
+
+// ============================================================
+// お面位置
+// ============================================================
+
+function updateDenjiMaskPosition() {
+
+  denjiMask.style.left =
+    maskTargetX + "px";
+
+  denjiMask.style.top =
+    maskTargetY + "px";
+
+}
+
+// ============================================================
+// お面：初回リアクション
+// ============================================================
+
+function startMaskFirstReaction() {
+
+  if (!maskMode) return;
+  if (maskReaction) return;
+
+  maskReaction = true;
+  maskFollowing = false;
+  maskRubbing = false;
+
+  clearTimeout(maskReactionTimer);
+
+  showMessage(
+    "……！！！！！"
+  );
+
+
+  // 少し間を置いて最初のジャンプ
+
+  maskReactionTimer =
+    setTimeout(function() {
+
+      if (!maskMode) return;
+
+      beam.classList.remove("jump");
+
+      void beam.offsetWidth;
+
+      beam.classList.add("jump");
+
+    }, 700);
+
+
+  // 1回目のジャンプの後、
+  // 「チェンソー様ア！！」＋3連ジャンプ
+
+  maskReactionTimer =
+    setTimeout(function() {
+
+      if (!maskMode) return;
+
+      beam.classList.remove("jump");
+
+      showMessage(
+        "チェンソー様ア！！"
+      );
+
+      void beam.offsetWidth;
+
+      beam.classList.add("jump");
+
+    }, 1250);
+
+
+  maskReactionTimer =
+    setTimeout(function() {
+
+      if (!maskMode) return;
+
+      beam.classList.remove("jump");
+
+      void beam.offsetWidth;
+
+      beam.classList.add("jump");
+
+    }, 1550);
+
+
+  maskReactionTimer =
+    setTimeout(function() {
+
+      if (!maskMode) return;
+
+      beam.classList.remove("jump");
+
+      void beam.offsetWidth;
+
+      beam.classList.add("jump");
+
+    }, 1850);
+
+
+  // リアクション終了
+
+  maskReactionTimer =
+    setTimeout(function() {
+
+      if (!maskMode) return;
+
+      beam.classList.remove("jump");
+
+      clearMessage();
+
+      maskReaction = false;
+      maskFollowing = true;
+
+    }, 2350);
+
+}
+
+// ============================================================
+// お面：ルンルン追跡
+// ============================================================
+
+function moveBeamTowardMask() {
+
+  if (!maskMode) return;
+  if (!maskFollowing) return;
+  if (maskReaction) return;
+
+  if (maskRubbing) return;
+
+
+  const beamRect =
+    beam.getBoundingClientRect();
+
+  const maskRect =
+    denjiMask.getBoundingClientRect();
+
+
+  const beamCenterX =
+    beamRect.left +
+    beamRect.width / 2;
+
+  const beamCenterY =
+    beamRect.top +
+    beamRect.height / 2;
+
+
+  const maskCenterX =
+    maskRect.left +
+    maskRect.width / 2;
+
+  const maskCenterY =
+    maskRect.top +
+    maskRect.height / 2;
+
+
+  const distanceX =
+    maskCenterX -
+    beamCenterX;
+
+  const distanceY =
+    maskCenterY -
+    beamCenterY;
+
+
+  /*
+    お面の中心までではなく、
+    お面の左右どちらかの「真横」まで近づく。
+  */
+
+  const sideDistance =
+    (beamRect.width + maskRect.width) / 2;
+
+
+  const horizontalClose =
+    Math.abs(distanceX) <= sideDistance;
+
+
+  const verticalClose =
+    Math.abs(distanceY) <= beamRect.height * 0.55;
+
+
+  if (
+    horizontalClose &&
+    verticalClose
+  ) {
+
+    startMaskRubbing();
+
+    return;
+
+  }
+
+
+  // ルンルン移動
+
+  const speed = 1.8;
+
+  let moveX = 0;
+  let moveY = 0;
+
+
+  if (Math.abs(distanceX) > 4) {
+
+    moveX =
+      distanceX > 0
+        ? speed
+        : -speed;
+
+  }
+
+
+  if (Math.abs(distanceY) > 4) {
+
+    moveY =
+      distanceY > 0
+        ? speed
+        : -speed;
+
+  }
+
+
+  x +=
+    moveX /
+    game.clientWidth *
+    100;
+
+  y +=
+    moveY /
+    game.clientHeight *
+    100;
+
+
+  x =
+    Math.max(
+      10,
+      Math.min(
+        90,
+        x
+      )
+    );
+
+
+  y =
+    Math.max(
+      15,
+      Math.min(
+        BOTTOM_WALL,
+        y
+      )
+    );
+
+
+  beam.style.left =
+    x + "%";
+
+  beam.style.top =
+    y + "%";
+
+}
+
+
 
 
 // ============================================================
