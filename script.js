@@ -2278,6 +2278,8 @@ denjiMask.style.top =
 denjiMask.style.display =
   "block";
 
+startMaskFirstReaction();
+      
       return;
 
     }
