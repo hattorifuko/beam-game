@@ -290,13 +290,13 @@ body {
 #denji-mask {
   position: absolute;
 
-  width: 512px;
-  height: 512px;
+  width: 150px;
+  height: 150px;
 
   left: 50%;
   top: 50%;
 
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -120%);
 
   pointer-events: none;
 
