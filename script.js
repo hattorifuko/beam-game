@@ -2979,16 +2979,38 @@ game.addEventListener(
     // ========================================================
 
     if (
-      maskMode &&
-      maskDragging &&
-      event.touches.length === 0
-    ) {
+  maskMode &&
+  maskFirstTap &&
+  event.touches.length === 0 &&
+  !maskReaction
+) {
 
-      maskDragging = false;
+  clearTimeout(holdTimer);
 
-      return;
+  // ホールドが成立していた場合
+  if (maskHoldRecognized) {
 
-    }
+    maskDragging = false;
+    maskHoldRecognized = false;
+
+    return;
+
+  }
+
+  // ホールドにならなかった場合は
+  // 通常のタップとして処理する
+  maskDragging = false;
+  maskHoldRecognized = false;
+
+  mode = "normal";
+
+  doTap(
+    event.changedTouches[0]
+  );
+
+  return;
+
+}
     
     Array.from(
       event.changedTouches
