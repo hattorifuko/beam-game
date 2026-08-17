@@ -2289,42 +2289,62 @@ startMaskFirstReaction();
 
     }
 
-    // ========================================================
-    // お面モード：お面をホールドして移動
-    // ========================================================
+// ========================================================
+// お面モード：1本指ホールド待機
+// ========================================================
 
-    if (
-      maskMode &&
-      maskFirstTap &&
-      event.touches.length === 1 &&
-      !maskReaction
-    ) {
+if (
+  maskMode &&
+  maskFirstTap &&
+  event.touches.length === 1 &&
+  !maskReaction
+) {
 
-      const touch =
-        event.touches[0];
+  const touch =
+    event.touches[0];
 
-      const maskRect =
-        denjiMask.getBoundingClientRect();
+  maskDragging = false;
+  maskHoldRecognized = false;
 
-      maskDragging = true;
+  const maskRect =
+    denjiMask.getBoundingClientRect();
 
-      maskDragOffsetX =
-        touch.clientX -
-        (
-          maskRect.left +
-          maskRect.width / 2
-        );
+  maskDragOffsetX =
+    touch.clientX -
+    (
+      maskRect.left +
+      maskRect.width / 2
+    );
 
-      maskDragOffsetY =
-        touch.clientY -
-        (
-          maskRect.top +
-          maskRect.height / 2
-        );
+  maskDragOffsetY =
+    touch.clientY -
+    (
+      maskRect.top +
+      maskRect.height / 2
+    );
 
-      return;
 
-    }
+  clearTimeout(holdTimer);
+
+  holdTimer =
+    setTimeout(function() {
+
+      if (
+        maskMode &&
+        maskFirstTap &&
+        !maskReaction
+      ) {
+
+        maskHoldRecognized = true;
+        maskDragging = true;
+
+      }
+
+    }, 550);
+
+  return;
+
+}
     
     Array.from(
       event.changedTouches
