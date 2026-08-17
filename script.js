@@ -2974,6 +2974,17 @@ game.addEventListener(
 
     updateLastInteraction();
 
+    // お面モードでも指表示を確実に消す
+    Array.from(
+      event.changedTouches
+    ).forEach(function(touch) {
+
+      removeTouchIndicator(
+        touch.identifier
+      );
+
+    });
+    
     // ========================================================
     // お面モード：お面の移動終了
     // ========================================================
