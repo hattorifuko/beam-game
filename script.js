@@ -57,6 +57,11 @@ let maskFollowing = false;
 
 let maskRubbing = false;
 
+let maskDragging = false;
+
+let maskDragOffsetX = 0;
+let maskDragOffsetY = 0;
+
 let maskTargetX = 50;
 let maskTargetY = 50;
 
@@ -2281,6 +2286,43 @@ startMaskFirstReaction();
       return;
 
     }
+
+    // ========================================================
+    // お面モード：お面をホールドして移動
+    // ========================================================
+
+    if (
+      maskMode &&
+      maskFirstTap &&
+      event.touches.length === 1 &&
+      !maskReaction
+    ) {
+
+      const touch =
+        event.touches[0];
+
+      const maskRect =
+        denjiMask.getBoundingClientRect();
+
+      maskDragging = true;
+
+      maskDragOffsetX =
+        touch.clientX -
+        (
+          maskRect.left +
+          maskRect.width / 2
+        );
+
+      maskDragOffsetY =
+        touch.clientY -
+        (
+          maskRect.top +
+          maskRect.height / 2
+        );
+
+      return;
+
+    }
     
     Array.from(
       event.changedTouches
@@ -2514,7 +2556,48 @@ game.addEventListener(
 
     updateLastInteraction();
 
+    // ========================================================
+    // お面モード：お面を指で移動
+    // ========================================================
 
+    if (
+      maskMode &&
+      maskDragging &&
+      event.touches.length === 1
+    ) {
+
+      const touch =
+        event.touches[0];
+
+      const rect =
+        game.getBoundingClientRect();
+
+      const maskX =
+        touch.clientX -
+        rect.left -
+        maskDragOffsetX;
+
+      const maskY =
+        touch.clientY -
+        rect.top -
+        maskDragOffsetY;
+
+      denjiMask.style.left =
+        maskX + "px";
+
+      denjiMask.style.top =
+        maskY + "px";
+
+      maskTargetX =
+        maskX;
+
+      maskTargetY =
+        maskY;
+
+      return;
+
+    }
+    
     Array.from(
       event.changedTouches
     ).forEach(function(touch) {
@@ -2869,7 +2952,22 @@ game.addEventListener(
 
     updateLastInteraction();
 
+    // ========================================================
+    // お面モード：お面の移動終了
+    // ========================================================
 
+    if (
+      maskMode &&
+      maskDragging &&
+      event.touches.length === 0
+    ) {
+
+      maskDragging = false;
+
+      return;
+
+    }
+    
     Array.from(
       event.changedTouches
     ).forEach(function(touch) {
@@ -3270,23 +3368,26 @@ game.addEventListener(
 
 function moveBeam() {
 
-  if (maskMode) {
+if (maskMode) {
 
-    if (
-      maskFollowing &&
-      !maskReaction
-    ) {
+  if (
+    maskFollowing &&
+    !maskReaction
+  ) {
 
-      moveBeamTowardMask();
-
-    }
-
-    checkMaskRubbingDistance();
+    moveBeamTowardMask();
 
   }
 
+  checkMaskRubbingDistance();
 
-  if (mode === "normal") {
+}
+
+
+  if (
+  mode === "normal" &&
+  !maskMode
+) {
 
     x += dx;
     y += dy;
