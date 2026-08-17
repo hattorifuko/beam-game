@@ -59,6 +59,8 @@ let maskRubbing = false;
 
 let maskDragging = false;
 
+let maskHoldRecognized = false;
+
 let maskDragOffsetX = 0;
 let maskDragOffsetY = 0;
 
