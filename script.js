@@ -171,10 +171,17 @@ maskButton.addEventListener("click", function(event) {
 
   if (maskMode) {
 
-    maskFirstTap = false;
+  maskFirstTap = false;
 
-    denjiMask.style.display =
-      "none";
+    clearTouchIndicators();
+
+  // 背ビレモード中なら、通常ビームに戻す
+  if (mode === "fin") {
+    exitFinModeToNormal();
+  }
+
+  denjiMask.style.display =
+    "none";
 
     showMessage(
       "キミはお面を付けた！画面をタップしてみよう！"
@@ -1175,6 +1182,8 @@ function moveFinTowardFinger() {
 function enterFinMode() {
 
   if (mode !== "normal") return;
+
+  if (maskMode) return;
 
   mode = "fin";
 
@@ -2275,11 +2284,14 @@ game.addEventListener(
 const rect =
   game.getBoundingClientRect();
 
-denjiMask.style.left =
-  (touch.clientX - rect.left) + "px";
+maskTargetX =
+  touch.clientX;
 
-denjiMask.style.top =
-  (touch.clientY - rect.top + 20) + "px";
+maskTargetY =
+  touch.clientY + 20;
+
+updateDenjiMaskPosition();
+
 denjiMask.style.display =
   "block";
 
@@ -2346,16 +2358,20 @@ if (
 
 }
     
-    Array.from(
-      event.changedTouches
-    ).forEach(function(touch) {
+   if (!maskMode) {
 
-      createTouchIndicator(
-        touch.identifier,
-        touch
-      );
+  Array.from(
+    event.changedTouches
+  ).forEach(function(touch) {
 
-    });
+    createTouchIndicator(
+      touch.identifier,
+      touch
+    );
+
+  });
+
+}
 
 
     // ========================================================
@@ -2620,17 +2636,20 @@ game.addEventListener(
 
     }
     
-    Array.from(
-      event.changedTouches
-    ).forEach(function(touch) {
+if (!maskMode) {
 
-      createTouchIndicator(
-        touch.identifier,
-        touch
-      );
+  Array.from(
+    event.changedTouches
+  ).forEach(function(touch) {
 
-    });
+    createTouchIndicator(
+      touch.identifier,
+      touch
+    );
 
+  });
+
+}
 
     // ========================================================
     // ▲1本指
@@ -3604,15 +3623,16 @@ setInterval(function() {
 setInterval(function() {
 
   if (
-    mode === "normal" &&
-    Date.now() -
-      lastInteractionTime >=
-      FIN_WAIT_TIME
-  ) {
+  mode === "normal" &&
+  !maskMode &&
+  Date.now() -
+    lastInteractionTime >=
+    FIN_WAIT_TIME
+) {
 
-    enterFinMode();
+  enterFinMode();
 
-  }
+}
 
 }, 100);
 
@@ -3623,11 +3643,14 @@ setInterval(function() {
 
 function updateDenjiMaskPosition() {
 
+  const rect =
+    game.getBoundingClientRect();
+
   denjiMask.style.left =
-    maskTargetX + "px";
+    (maskTargetX - rect.left) + "px";
 
   denjiMask.style.top =
-    maskTargetY + "px";
+    (maskTargetY - rect.top) + "px";
 
 }
 
