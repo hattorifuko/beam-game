@@ -385,19 +385,19 @@ transform: none;
 @keyframes jump {
 
   0% {
-    transform: translate(-50%, -50%) translateY(0) scale(1);
+    margin-top: 0;
   }
 
   35% {
-    transform: translate(-50%, -50%) translateY(-75px) scale(1.04);
+    margin-top: -75px;
   }
 
   65% {
-    transform: translate(-50%, -50%) translateY(-70px) scale(1.03);
+    margin-top: -70px;
   }
 
   100% {
-    transform: translate(-50%, -50%) translateY(0) scale(1);
+    margin-top: 0;
   }
 
 }
