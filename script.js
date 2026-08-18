@@ -194,17 +194,32 @@ maskButton.addEventListener("click", function(event) {
 
   else {
 
-    maskFirstTap = false;
+  maskFirstTap = false;
 
-    denjiMask.style.display =
-      "none";
+  maskReaction = false;
+  maskFollowing = false;
+  maskRubbing = false;
 
-    clearMessage();
+  beam.classList.remove(
+    "mask-following"
+  );
 
-    maskButton.textContent =
-      "おめん つける";
+  beam.classList.remove(
+    "mask-rubbing"
+  );
 
-  }
+  denjiMask.style.display =
+    "none";
+
+  clearMessage();
+
+  maskButton.textContent =
+    "おめん つける";
+
+  updateLastInteraction();
+  startWalking();
+
+}
 
   closeMenu();
 
@@ -526,45 +541,21 @@ function doMaskTap(touch) {
   if (!maskMode) return;
   if (maskReaction) return;
 
-  tapCount++;
+  registerNormalTap(touch);
 
-  createSparkle(touch);
+  beam.classList.remove("jump");
 
-  clearTimeout(tapWindowTimer);
+  void beam.offsetWidth;
 
+  beam.classList.add("jump");
 
-  // 5タップ
-  if (tapCount >= 5) {
+  setTimeout(function() {
 
-    tapCount = 0;
-
-    beam.classList.remove("mask-following");
     beam.classList.remove("jump");
 
-    void beam.offsetWidth;
+  }, 570);
 
-    beam.classList.add("jump");
-
-    showMessage(
-      randomChoice(fiveTapLines),
-      2000
-    );
-
-    setTimeout(function() {
-
-      if (!maskMode) return;
-
-      beam.classList.remove("jump");
-
-      beam.classList.add(
-        "mask-following"
-      );
-
-    }, 570);
-
-    return;
-
-  }
+}
 
 
   // 2タップ
