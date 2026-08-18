@@ -517,6 +517,112 @@ function updateBeamDirection() {
 let tapCount = 0;
 let tapWindowTimer = null;
 
+// ============================================================
+// お面モード：タップ
+// ============================================================
+
+function doMaskTap(touch) {
+
+  if (!maskMode) return;
+  if (maskReaction) return;
+
+  tapCount++;
+
+  createSparkle(touch);
+
+  clearTimeout(tapWindowTimer);
+
+
+  // 5タップ
+  if (tapCount >= 5) {
+
+    tapCount = 0;
+
+    beam.classList.remove("mask-following");
+    beam.classList.remove("jump");
+
+    void beam.offsetWidth;
+
+    beam.classList.add("jump");
+
+    showMessage(
+      randomChoice(fiveTapLines),
+      2000
+    );
+
+    setTimeout(function() {
+
+      if (!maskMode) return;
+
+      beam.classList.remove("jump");
+
+      beam.classList.add(
+        "mask-following"
+      );
+
+    }, 570);
+
+    return;
+
+  }
+
+
+  // 2タップ
+  if (tapCount === 2) {
+
+    beam.classList.remove("mask-following");
+    beam.classList.remove("jump");
+
+    void beam.offsetWidth;
+
+    beam.classList.add("jump");
+
+    showMessage(
+      randomChoice(twoTapLines),
+      1000
+    );
+
+  }
+
+
+  // 1タップ
+  if (tapCount === 1) {
+
+    beam.classList.remove("mask-following");
+    beam.classList.remove("jump");
+
+    void beam.offsetWidth;
+
+    beam.classList.add("jump");
+
+  }
+
+
+  tapWindowTimer =
+    setTimeout(function() {
+
+      tapCount = 0;
+
+    }, 850);
+
+
+  setTimeout(function() {
+
+    if (!maskMode) return;
+
+    beam.classList.remove("jump");
+
+    if (maskFollowing) {
+
+      beam.classList.add(
+        "mask-following"
+      );
+
+    }
+
+  }, 570);
+
+}
 
 function registerNormalTap(touch) {
 
@@ -3352,6 +3458,28 @@ return;
 
     }
 
+    // ========================================================
+    // お面モード：1本指タップ
+    // ========================================================
+
+    if (
+      maskMode &&
+      event.touches.length === 0 &&
+      oneFingerHeld &&
+      !touchMoved
+    ) {
+
+      clearTimeout(holdTimer);
+
+      oneFingerHeld = false;
+
+      doMaskTap(
+      event.changedTouches[0]
+      );
+
+      return;
+
+}
 
     // ========================================================
     // 通常1本指
@@ -3812,13 +3940,18 @@ function moveBeamTowardMask() {
     お面の左右どちらかの「真横」まで近づく。
   */
 
-  const sideDistance =
-    (beamRect.width + maskRect.width) / 2;
+  /*
+  ビームの中心点が
+  お面の左右のフチに触れるくらいまで近づく。
 
+  ビーム自身の幅は判定に含めない。
+*/
 
-  const horizontalClose =
-    Math.abs(distanceX) <= sideDistance;
+const maskHalfWidth =
+  maskRect.width / 2;
 
+const horizontalClose =
+  Math.abs(distanceX) <= maskHalfWidth;
 
   const verticalClose =
     Math.abs(distanceY) <= beamRect.height * 0.55;
