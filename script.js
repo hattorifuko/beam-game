@@ -553,56 +553,6 @@ function doMaskTap(touch) {
 
     beam.classList.remove("jump");
 
-  }, 570);
-
-}
-
-
-  // 2タップ
-  if (tapCount === 2) {
-
-    beam.classList.remove("mask-following");
-    beam.classList.remove("jump");
-
-    void beam.offsetWidth;
-
-    beam.classList.add("jump");
-
-    showMessage(
-      randomChoice(twoTapLines),
-      1000
-    );
-
-  }
-
-
-  // 1タップ
-  if (tapCount === 1) {
-
-    beam.classList.remove("mask-following");
-    beam.classList.remove("jump");
-
-    void beam.offsetWidth;
-
-    beam.classList.add("jump");
-
-  }
-
-
-  tapWindowTimer =
-    setTimeout(function() {
-
-      tapCount = 0;
-
-    }, 850);
-
-
-  setTimeout(function() {
-
-    if (!maskMode) return;
-
-    beam.classList.remove("jump");
-
     if (maskFollowing) {
 
       beam.classList.add(
