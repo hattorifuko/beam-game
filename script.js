@@ -200,13 +200,36 @@ maskButton.addEventListener("click", function(event) {
   maskFollowing = false;
   maskRubbing = false;
 
-  beam.classList.remove(
-    "mask-following"
-  );
+    // 通常モード側に残っている
+  // タッチ・揺らし状態をリセット
+  clearTimeout(holdTimer);
+  clearTimeout(normalTimer);
 
-  beam.classList.remove(
-    "mask-rubbing"
-  );
+  oneFingerHeld = false;
+  twoFingerHolding = false;
+
+  touchMoved = false;
+
+  shakingStarted = false;
+  shakeStartTime = 0;
+  shakeMaxReached = false;
+
+  tickleDistance = 0;
+  tickleChanges = 0;
+  tickleLevel = 0;
+
+  mode = "normal";
+
+  beam.classList.remove("held");
+  beam.classList.remove("shaking");
+  beam.classList.remove("shake-max");
+  beam.classList.remove("tickled");
+  beam.classList.remove("tickle-max");
+  beam.classList.remove("jump");
+  beam.classList.remove("mask-following");
+  beam.classList.remove("mask-rubbing");
+
+  delete beam.dataset.tickleLevel;
 
   denjiMask.style.display =
     "none";
