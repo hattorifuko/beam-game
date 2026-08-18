@@ -602,10 +602,6 @@ function doMaskTap(touch) {
 
 }
 
-}
-
-}
-
 function registerNormalTap(touch) {
 
   tapCount++;
