@@ -2382,17 +2382,17 @@ const rect =
   game.getBoundingClientRect();
 
 maskTargetX =
-  touch.clientX;
+  rect.left +
+  rect.width / 2;
 
 maskTargetY =
-  touch.clientY + 20;
+  rect.top +
+  rect.height / 2;
 
 updateDenjiMaskPosition();
 
 denjiMask.style.display =
   "block";
-
-startMaskFirstReaction();
       
       return;
 
