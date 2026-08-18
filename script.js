@@ -3051,11 +3051,11 @@ game.addEventListener(
 
     });
     
-    // ========================================================
-    // お面モード：お面の移動終了
-    // ========================================================
+   // ========================================================
+// お面モード：お面の移動・タップ終了
+// ========================================================
 
-    if (
+if (
   maskMode &&
   maskFirstTap &&
   event.touches.length === 0 &&
@@ -3064,7 +3064,7 @@ game.addEventListener(
 
   clearTimeout(holdTimer);
 
-  // ホールドが成立していた場合
+  // ホールドしてお面を動かしていた場合
   if (maskHoldRecognized) {
 
     maskDragging = false;
@@ -3074,14 +3074,12 @@ game.addEventListener(
 
   }
 
-  // ホールドにならなかった場合は
-  // 通常のタップとして処理する
+  // ホールドになる前に指を離した
+  // → お面モードのタップとして処理
   maskDragging = false;
   maskHoldRecognized = false;
 
-  mode = "normal";
-
-  doTap(
+  doMaskTap(
     event.changedTouches[0]
   );
 
