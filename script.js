@@ -566,25 +566,37 @@ function doMaskTap(touch) {
 
   registerNormalTap(touch);
 
-  // ルンルン追跡アニメーションを一旦止める
-  beam.classList.remove("mask-following");
+  // ジャンプ中はお面追跡を完全に停止
+  maskFollowing = false;
 
-  beam.classList.remove("jump");
+  beam.classList.remove(
+    "mask-following"
+  );
+
+  beam.classList.remove(
+    "jump"
+  );
 
   void beam.offsetWidth;
 
-  // ジャンプ
-  beam.classList.add("jump");
+  // ジャンプ開始
+  beam.classList.add(
+    "jump"
+  );
 
   setTimeout(function() {
 
-    beam.classList.remove("jump");
+    beam.classList.remove(
+      "jump"
+    );
 
-    // お面を追跡中なら、ルンルンに戻る
+    // ジャンプ終了後、お面追跡に復帰
     if (
       maskMode &&
-      maskFollowing
+      !maskReaction
     ) {
+
+      maskFollowing = true;
 
       beam.classList.add(
         "mask-following"
@@ -593,6 +605,8 @@ function doMaskTap(touch) {
     }
 
   }, 570);
+
+}
 
 }
 
