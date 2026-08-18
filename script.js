@@ -543,17 +543,25 @@ function doMaskTap(touch) {
 
   registerNormalTap(touch);
 
+  // ルンルン追跡アニメーションを一旦止める
+  beam.classList.remove("mask-following");
+
   beam.classList.remove("jump");
 
   void beam.offsetWidth;
 
+  // ジャンプ
   beam.classList.add("jump");
 
   setTimeout(function() {
 
     beam.classList.remove("jump");
 
-    if (maskFollowing) {
+    // お面を追跡中なら、ルンルンに戻る
+    if (
+      maskMode &&
+      maskFollowing
+    ) {
 
       beam.classList.add(
         "mask-following"
