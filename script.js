@@ -2343,6 +2343,8 @@ updateDenjiMaskPosition();
 
 denjiMask.style.display =
   "block";
+
+startMaskFirstReaction();
       
       return;
 
@@ -2368,19 +2370,13 @@ if (
   const maskRect =
     denjiMask.getBoundingClientRect();
 
-  maskDragOffsetX =
-    touch.clientX -
-    (
-      maskRect.left +
-      maskRect.width / 2
-    );
+maskDragOffsetX =
+  touch.clientX -
+  maskRect.left;
 
-  maskDragOffsetY =
-    touch.clientY -
-    (
-      maskRect.top +
-      maskRect.height / 2
-    );
+maskDragOffsetY =
+  touch.clientY -
+  maskRect.top;
 
 
   clearTimeout(holdTimer);
@@ -2397,6 +2393,11 @@ if (
         maskHoldRecognized = true;
         maskDragging = true;
 
+        showMessage(
+  "お面を動かしてみよう！",
+  1200
+);
+        
       }
 
     }, 550);
